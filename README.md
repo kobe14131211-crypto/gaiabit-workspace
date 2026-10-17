@@ -1,7 +1,5 @@
-# GaiaBit PM | Cloud Shared API Sync Edition
+# GaiaBit PM | Supabase Connected Edition
 
-## ☁️ 解決跨帳號、跨裝置不同步問題
-本次更新直接內建**雲端共用 API 資料庫 (Cloud Shared JSON API)**：
-1. 當你用帳號 A 新增任務或修改狀態時，資料會直接寫入雲端共用資料庫。
-2. 當其他人用帳號 B（或其他電腦、手機）打開網址時，系統會自動從雲端載入最新任務（並每 5 秒自動背景輪詢同步）。
-3. 完美實現跨 Google 帳號、跨裝置的 100% 即時同步！
+## 🚀 已完成 Supabase 雲端直接串接
+- URL: https://pbesxijirtblnqqohsqq.supabase.co
+- ANON KEY 已內建綁定。
