@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GaiaBit PM Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0b0f19',
+                        cardBg: '#131c2e',
+                        borderCol: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-darkBg text-slate-100 min-h-screen flex font-sans">
+    <div id="app" class="flex w-full">
+        <aside class="w-64 bg-cardBg border-r border-borderCol p-6 flex flex-col justify-between hidden lg:flex">
+            <div>
+                <div class="flex items-center space-x-3 mb-8">
+                    <div class="w-9 h-9 rounded-lg bg-amber-500 flex items-center justify-center font-bold text-slate-900 text-lg">G</div>
+                    <div>
+                        <h1 class="font-bold text-sm">GaiaBit PM</h1>
+                        <p class="text-xs text-slate-400">Animal Data Network</p>
+                    </div>
+                </div>
+                <nav class="space-y-1 text-sm text-slate-300">
+                    <a href="#" class="flex items-center px-3 py-2 rounded-lg bg-blue-600 text-white font-medium">今日總覽</a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-400">雙週 Roadmap</a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-400">任務中心</a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-400">Animal ESG</a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-400">Animal Data</a>
+                    <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-400">商業模式</a>
+                </nav>
+            </div>
+            <div class="text-xs text-slate-500">v8.0 公開旗艦版</div>
+        </aside>
+
+        <main class="flex-1 flex flex-col min-w-0">
+            <header class="h-16 border-b border-borderCol px-6 flex items-center justify-between bg-cardBg/50 backdrop-blur">
+                <div class="text-xs text-slate-400">PM COMMAND CENTER • 2026.09 → 2026.12</div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-xs px-2.5 py-1 rounded-full" :class="isAdmin ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-slate-400'">
+                        {{ isAdmin ? '🔐 管理者模式 (已解鎖)' : '👀 公開檢視模式' }}
+                    </span>
+                    <button @click="toggleAdminModal" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+                        {{ isAdmin ? '登出管理者' : '管理登入' }}
+                    </button>
+                </div>
+            </header>
+
+            <div class="p-8 space-y-8 flex-1 overflow-y-auto">
+                <div>
+                    <h2 class="text-3xl font-extrabold tracking-tight mb-2">把每天的工作，全部指向同一個 Animal Data Asset</h2>
+                    <p class="text-sm text-slate-400">ESG 是資源與收入引擎；場域與 LiveCam 是資料入口；APP 是互動與事件載體；獸醫合作提供 Ground Truth；Launch 負責市場放大。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-cardBg border border-borderCol p-5 rounded-xl">
+                        <div class="text-xs text-slate-400 mb-1">LAUNCH 倒數</div>
+                        <div class="text-3xl font-bold text-amber-400">{{ metrics.launch_days }} 天</div>
+                        <div class="text-xs text-slate-500 mt-1">暫定 2026/12/22</div>
+                    </div>
+                    <div class="bg-cardBg border border-borderCol p-5 rounded-xl">
+                        <div class="text-xs text-slate-400 mb-1">整體任務完成率</div>
+                        <div class="text-3xl font-bold text-blue-400">{{ metrics.task_completion_rate }}%</div>
+                        <div class="w-full bg-slate-800 h-1.5 rounded-full mt-3 overflow-hidden">
+                            <div class="bg-blue-500 h-full" :style="{ width: metrics.task_completion_rate + '%' }"></div>
+                        </div>
+                    </div>
+                    <div class="bg-cardBg border border-borderCol p-5 rounded-xl">
+                        <div class="text-xs text-slate-400 mb-1">CURRENT SPRINT</div>
+                        <div class="text-sm font-bold text-slate-200 mt-1 truncate">{{ metrics.current_sprint_title }}</div>
+                        <div class="text-xs text-slate-500 mt-2">小型實驗與第一份實業案例</div>
+                    </div>
+                    <div class="bg-cardBg border border-borderCol p-5 rounded-xl">
+                        <div class="text-xs text-slate-400 mb-1">近期未完成</div>
+                        <div class="text-3xl font-bold text-rose-400">{{ tasks.filter(t => t.status !== 'completed').length }}</div>
+                        <div class="text-xs text-slate-500 mt-1">PO 追蹤者優先進入今日焦點</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-cardBg border border-borderCol rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-bold text-lg flex items-center space-x-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+                                <span>今天最重要的事 <span class="text-xs font-normal text-slate-400 ml-2">2026/10/17</span></span>
+                            </h3>
+                            <button v-if="isAdmin" @click="openAddTaskModal" class="text-xs bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg font-medium transition">
+                                + 新增任務
+                            </button>
+                        </div>
+                        <div class="space-y-4">
+                            <div v-for="task in tasks" :key="task.id" class="p-4 rounded-xl border border-borderCol/60 bg-slate-900/40 hover:border-slate-700 transition flex items-start justify-between">
+                                <div class="flex items-start space-x-3">
+                                    <input type="checkbox" :checked="task.status === 'completed'" @change="toggleTaskStatus(task)" :disabled="!isAdmin" class="mt-1.5 w-4 h-4 rounded border-slate-700 text-blue-600 focus:ring-blue-500 cursor-pointer disabled:opacity-50">
+                                    <div>
+                                        <div :class="{'line-through text-slate-500': task.status === 'completed'}" class="text-sm font-medium text-slate-200">
+                                            {{ task.title }}
+                                        </div>
+                                        <div class="flex items-center space-x-2 mt-2">
+                                            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">{{ task.category }}</span>
+                                            <span class="text-[10px] text-slate-500">過期・{{ task.sprint }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button v-if="isAdmin" @click="deleteTask(task.id)" class="text-xs text-rose-400 hover:text-rose-300 ml-2">刪除</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-cardBg border border-borderCol rounded-xl p-6">
+                            <h3 class="text-xs font-bold text-amber-400 tracking-wider mb-2">NORTH STAR</h3>
+                            <p class="text-sm font-medium leading-relaxed text-slate-200 mb-4">
+                                今天先讓動物被看見；現在讓每一次被看見都留下有意義的資料；未來讓資料成為更早發現健康風險的能力。
+                            </p>
+                            <div class="text-xs text-slate-400 space-y-1.5 border-t border-borderCol pt-4">
+                                <div>企業 ESG 資源 → 場域數位化 → 行為資料 → 獸醫 Ground Truth</div>
+                                <div class="text-amber-400 font-medium">AI 健康風險</div>
+                            </div>
+                        </div>
+                        <div class="bg-cardBg border border-borderCol rounded-xl p-6">
+                            <h3 class="text-xs font-bold text-blue-400 tracking-wider mb-3">本週管理節奏</h3>
+                            <ul class="text-xs text-slate-300 space-y-2">
+                                <li><strong>週一：</strong>PM 30-45 分鐘對焦</li>
+                                <li><strong>週三：</strong>Data / Tech 阻塞複查</li>
+                                <li><strong>週五：</strong>產出驗收</li>
+                                <li><strong>每兩週：</strong>Decision Log 歸納</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div v-if="showLoginModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+            <div class="bg-cardBg border border-borderCol p-6 rounded-2xl w-96 shadow-2xl">
+                <h3 class="text-lg font-bold mb-4">管理者登入</h3>
+                <p class="text-xs text-slate-400 mb-4">請輸入密碼以解鎖寫入與編輯權限（測試密碼：<code class="text-amber-400">demo1234</code>）</p>
+                <input type="password" v-model="inputPassword" placeholder="輸入管理者密碼" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-sm mb-4 focus:outline-none focus:border-blue-500">
+                <div class="flex justify-end space-x-3">
+                    <button @click="showLoginModal = false" class="px-4 py-2 text-xs text-slate-400 hover:text-white">取消</button>
+                    <button @click="handleLogin" class="px-4 py-2 text-xs bg-blue-600 hover:bg-blue-500 rounded-lg font-medium">確認登入</button>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="showAddTaskModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+            <div class="bg-cardBg border border-borderCol p-6 rounded-2xl w-full max-w-md shadow-2xl">
+                <h3 class="text-lg font-bold mb-4">新增任務項目</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs text-slate-400 block mb-1">任務標題與細節</label>
+                        <input type="text" v-model="newTask.title" placeholder="例如：新增 AI 辨識模型 V2" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">分類標籤</label>
+                            <input type="text" v-model="newTask.category" placeholder="Company / Launch / ESG" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">期限 (Sprint)</label>
+                            <input type="text" v-model="newTask.sprint" placeholder="10/20" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-400 block mb-1">負責人</label>
+                        <input type="text" v-model="newTask.assignee" placeholder="PM / Tech / Business" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button @click="showAddTaskModal = false" class="px-4 py-2 text-xs text-slate-400 hover:text-white">取消</button>
+                    <button @click="saveNewTask" class="px-4 py-2 text-xs bg-blue-600 hover:bg-blue-500 rounded-lg font-medium">儲存至資料庫</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://pbesxijirtblnqqohsqq.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_dun8cTZ4tnWHmyxso9hZOA_EbO9udW9';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const { createApp, ref, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const isAdmin = ref(false);
+                const showLoginModal = ref(false);
+                const showAddTaskModal = ref(false);
+                const inputPassword = ref('');
+                const metrics = ref({ launch_days: 66, task_completion_rate: 6, current_sprint_title: 'S4 小型實驗與第一份實業案例' });
+                const tasks = ref([]);
+                const newTask = ref({ title: '', category: 'Company', sprint: '10/20', assignee: 'PM' });
+
+                const fetchData = async () => {
+                    try {
+                        const { data: taskData } = await supabaseClient.from('tasks').select('*').order('id', { ascending: false });
+                        if (taskData) tasks.value = taskData;
+                        const { data: metricData } = await supabaseClient.from('project_metrics').select('*').single();
+                        if (metricData) metrics.value = metricData;
+                    } catch (err) { console.error(err); }
+                };
+
+                onMounted(() => { fetchData(); });
+                const toggleAdminModal = () => { isAdmin.value ? (isAdmin.value = false, alert('已登出')) : (showLoginModal.value = true); };
+                const handleLogin = () => { inputPassword.value === 'demo1234' ? (isAdmin.value = true, showLoginModal.value = false, inputPassword.value = '', alert('登入成功')) : alert('密碼錯誤'); };
+                const toggleTaskStatus = async (task) => {
+                    if (!isAdmin.value) return;
+                    const newStatus = task.status === 'completed' ? 'pending' : 'completed';
+                    const { error } = await supabaseClient.from('tasks').update({ status: newStatus }).eq('id', task.id);
+                    if (!error) task.status = newStatus;
+                };
+                const openAddTaskModal = () => { showAddTaskModal.value = true; };
+                const saveNewTask = async () => {
+                    if (!newTask.value.title) return alert('請輸入標題');
+                    const { data, error } = await supabaseClient.from('tasks').insert([newTask.value]).select();
+                    if (!error && data) { tasks.value.unshift(data[0]); newTask.value = { title: '', category: 'Company', sprint: '10/20', assignee: 'PM' }; showAddTaskModal.value = false; }
+                };
+                const deleteTask = async (id) => {
+                    if (!confirm('確定刪除？')) return;
+                    const { error } = await supabaseClient.from('tasks').delete().eq('id', id);
+                    if (!error) tasks.value = tasks.value.filter(t => t.id !== id);
+                };
+
+                return { isAdmin, showLoginModal, showAddTaskModal, inputPassword, metrics, tasks, newTask, toggleAdminModal, handleLogin, toggleTaskStatus, openAddTaskModal, saveNewTask, deleteTask };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "project_name": "GaiaBit PM Command Center",
+  "version": "8.0",
+  "target_launch_date": "2026-12-22",
+  "north_star": "今天先讓動物被看見；現在讓每一次被看見都留下有意義的資料；未來讓資料成為更早發現健康風險的能力。",
+  "database_tables": [
+    "tasks",
+    "project_metrics"
+  ]
+}
