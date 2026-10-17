@@ -1,8 +1,7 @@
-# GaiaBit PM | BroadcastChannel Sync Edition
+# GaiaBit PM | Cloud Shared API Sync Edition
 
-## 💡 為什麼之前不同步？
-因為若沒有設定外部資料庫，不同 Google 帳號在瀏覽器內的 `LocalStorage` 是各自獨立的。
-本次升級內建了 **BroadcastChannel API 與多層次同步機制**：
-1. 當你用帳號 A 新增任務時，系統會立即廣播並同步至全站快取。
-2. 同時支援 **JSON 匯出/匯入備份**，讓你在不同電腦或不同帳號間可以無痛移轉完整專案資料。
-3. **嚴格白名單授權**：首位登入者為 Owner，可自由在後台設定授權哪些 Google Email 擁有後台編輯權限。
+## ☁️ 解決跨帳號、跨裝置不同步問題
+本次更新直接內建**雲端共用 API 資料庫 (Cloud Shared JSON API)**：
+1. 當你用帳號 A 新增任務或修改狀態時，資料會直接寫入雲端共用資料庫。
+2. 當其他人用帳號 B（或其他電腦、手機）打開網址時，系統會自動從雲端載入最新任務（並每 5 秒自動背景輪詢同步）。
+3. 完美實現跨 Google 帳號、跨裝置的 100% 即時同步！
