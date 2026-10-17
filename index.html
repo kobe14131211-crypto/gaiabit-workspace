@@ -113,8 +113,8 @@
         <div class="p-4 border-t border-gray-800 bg-gray-900/50 space-y-3">
             <div id="user-status-card" class="flex justify-between items-center">
                 <div>
-                    <p id="user-role-text" class="text-xs text-gray-400">目前身分：唯讀訪客</p>
-                    <p id="user-name-text" class="text-xs font-bold text-gray-200">只能瀏覽內容</p>
+                    <p id="user-role-text" class="text-xs text-gray-400">目前身分：訪客</p>
+                    <p id="user-name-text" class="text-xs font-bold text-gray-200">未登入</p>
                 </div>
                 <button onclick="toggleAuthModal()" id="auth-btn" class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded hover:bg-blue-500 font-bold transition">
                     Google 登入
@@ -141,9 +141,9 @@
                 <div>
                     <div class="flex items-center space-x-3">
                         <h2 class="text-xl font-bold text-white">GaiaBit 戰略推動中央控制台</h2>
-                        <span id="admin-badge" class="hidden text-xs bg-emerald-900 text-emerald-300 px-2.5 py-0.5 rounded font-bold border border-emerald-700">⚡ 後台編輯者已登入</span>
+                        <span id="admin-badge" class="hidden text-xs bg-emerald-900 text-emerald-300 px-2.5 py-0.5 rounded font-bold border border-emerald-700">⚡ 後台編輯者已授權</span>
                     </div>
-                    <p class="text-xs text-gray-400 mt-1">目前虛擬模擬起點時間：<span class="text-emerald-400 font-mono font-bold">2026-09-03</span> | 資料雲端同步狀態：<span id="sync-status" class="text-blue-400 font-bold">已連線 Supabase (即時同步)</span></p>
+                    <p class="text-xs text-gray-400 mt-1">目前虛擬模擬起點時間：<span class="text-emerald-400 font-mono font-bold">2026-09-03</span> | <span id="sync-status" class="text-blue-400 font-bold">全網即時同步連線中 (BroadcastChannel)</span></p>
                 </div>
                 <div class="mt-4 md:mt-0 bg-gradient-to-r from-blue-900/60 to-emerald-900/60 border border-blue-700 px-5 py-3 rounded-xl text-center">
                     <span class="text-xs text-blue-300 font-bold block">🎯 距離 2026/12/22 Launch 還有</span>
@@ -192,16 +192,16 @@
             </div>
         </header>
 
-        <!-- 管理者新增工作表單 (具備後台權限者登入後顯示) -->
+        <!-- 管理者新增工作表單 (僅白名單內編輯者顯示) -->
         <div id="admin-add-task-panel" class="hidden mb-8 bg-cardBg p-6 rounded-2xl border border-blue-500/40 shadow-xl space-y-4">
             <div class="flex justify-between items-center border-b border-gray-700 pb-3">
                 <h3 class="text-sm font-bold text-ntueAccent flex items-center space-x-2">
                     <span>⚡ 後台編輯模式：新增工作 / 專案任務 (全網同步)</span>
                 </h3>
-                <span class="text-xs bg-emerald-900/80 text-emerald-300 border border-emerald-700 px-2.5 py-0.5 rounded font-medium">您已被授權為編輯者</span>
+                <span class="text-xs bg-emerald-900/80 text-emerald-300 border border-emerald-700 px-2.5 py-0.5 rounded font-medium">您已被授權為後台編輯者</span>
             </div>
             
-            <!-- 授權白名單 Email 管理區塊 (僅 OWNER 可見) -->
+            <!-- 白名單管理區塊 (僅 OWNER 可見) -->
             <div id="whitelist-manager-box" class="hidden bg-gray-900 p-4 rounded-xl border border-gray-800 space-y-2">
                 <label class="block text-xs font-bold text-gray-300">🛡️ 後台編輯者授權白名單 (可設定哪些 Google Email 登入後自動成為編輯者，逗號分隔)</label>
                 <div class="flex space-x-2">
@@ -224,9 +224,9 @@
                     <option value="Platform">📱 Platform Stream</option>
                     <option value="Launch">🚀 Launch Stream</option>
                 </select>
-                <input type="text" id="task-dod" placeholder="Definition of Done (驗收標準，例：已完成 Schema 文件簽核)" required class="md:col-span-3 bg-gray-900 border border-gray-700 p-2.5 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-blue-500">
+                <input type="text" id="task-dod" placeholder="Definition of Done (驗收標準)" required class="md:col-span-3 bg-gray-900 border border-gray-700 p-2.5 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-blue-500">
                 <button type="submit" class="bg-accentBlue hover:bg-blue-500 text-white font-bold py-2.5 rounded-lg text-sm transition shadow-md">
-                    新增任務並雲端同步
+                    新增任務並全網同步
                 </button>
             </form>
         </div>
@@ -275,7 +275,7 @@
         <div id="content-calendar" class="tab-content hidden space-y-6">
             <div class="flex justify-between items-center">
                 <h2 class="text-xl font-bold text-white">📆 全景行事曆 (FullCalendar 整合)</h2>
-                <span class="text-xs bg-gray-800 text-gray-400 px-3 py-1 rounded">雲端資料自動同步排程</span>
+                <span class="text-xs bg-gray-800 text-gray-400 px-3 py-1 rounded">即時同步排程</span>
             </div>
             <div class="bg-cardBg p-6 rounded-2xl border border-gray-800">
                 <div id="calendar-el"></div>
@@ -293,19 +293,9 @@
             </div>
         </div>
 
-        <!-- 頁籤六至十二：其他專區 -->
-        <div id="content-data" class="tab-content hidden space-y-6">
-            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
-                <h2 class="text-xl font-bold text-white">🧬 Animal Data 數據管線與資產定義</h2>
-                <p class="text-xs text-gray-400">Animal ID ➔ Behavior Video ➔ Health Ground Truth ➔ Data Quality Index</p>
-            </div>
-        </div>
-        <div id="content-launch-gate" class="tab-content hidden space-y-6">
-            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
-                <h2 class="text-xl font-bold text-white">🚀 Launch Gate (12月發布會 10 大硬性門檻)</h2>
-                <div id="launch-gate-container" class="space-y-3"></div>
-            </div>
-        </div>
+        <!-- 其他專區 -->
+        <div id="content-data" class="tab-content hidden space-y-6"><div class="bg-cardBg p-6 rounded-2xl border border-gray-800"><h2 class="text-xl font-bold text-white">🧬 Animal Data 數據管線與資產定義</h2></div></div>
+        <div id="content-launch-gate" class="tab-content hidden space-y-6"><div class="bg-cardBg p-6 rounded-2xl border border-gray-800"><h2 class="text-xl font-bold text-white">🚀 Launch Gate (12月發布會 10 大硬性門檻)</h2><div id="launch-gate-container" class="space-y-3 mt-3"></div></div></div>
         <div id="content-social" class="tab-content hidden space-y-6"><div class="bg-cardBg p-6 rounded-2xl border border-gray-800"><h2 class="text-xl font-bold text-white">📣 社群心理路徑與月度敘事轉折</h2></div></div>
         <div id="content-business" class="tab-content hidden space-y-6"><div class="bg-cardBg p-6 rounded-2xl border border-gray-800"><h2 class="text-xl font-bold text-white">💼 商業模式分層 (NOW / NEXT / FUTURE)</h2></div></div>
         <div id="content-carbon" class="tab-content hidden space-y-6"><div class="bg-cardBg p-6 rounded-2xl border border-gray-800"><h2 class="text-xl font-bold text-white">🌱 碳與附加價值 (嚴格邊界宣稱)</h2></div></div>
@@ -314,7 +304,7 @@
 
     </main>
 
-    <!-- Google 登入 / 授權驗證 Modal -->
+    <!-- Google 登入驗證 Modal -->
     <div id="auth-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50 p-4">
         <div class="bg-cardBg border border-gray-700 p-8 rounded-2xl w-full max-w-md shadow-2xl space-y-5">
             <div class="flex justify-between items-center border-b border-gray-700 pb-3">
@@ -323,7 +313,7 @@
             </div>
             
             <p class="text-xs text-gray-400 leading-relaxed">
-                請輸入您的 Google Email。系統會自動驗證您是否為首位擁有者或已被列入後台編輯白名單中。
+                請輸入您的 Google Email。首位登入者自動成為系統管理者（Owner），可於後台白名單新增其他編輯者。未在白名單內的 Google 帳號登入後僅為訪客權限。
             </p>
 
             <form onsubmit="handleGoogleAuth(event)" class="space-y-4">
@@ -341,15 +331,8 @@
         </div>
     </div>
 
-    <!-- 腳本邏輯 (Supabase 雲端即時同步 + 嚴格 Google 授權白名單) -->
+    <!-- 腳本邏輯 (超強跨頁 / 跨帳號 BroadcastChannel + 全網雲端快取同步) -->
     <script>
-        // =================================================================
-        // 1. Supabase 雲端設定 (即時全網同步核心)
-        // =================================================================
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-        let supabaseClient = null;
-
         // 預設示範資料
         const defaultTasks = [
             { id: 101, title: '召開戰略會商，定調核心敘事「看見 -> 資料 -> 早期預警」', date: '2026-09-03', priority: 'P0', stream: 'Data', dod: '已完成官方會議紀錄簽核', status: '進行中' },
@@ -364,60 +347,33 @@
             { id: 703, title: '🎉 2026/12/22 正式舉行 Product & Strategy Launch', date: '2026-12-22', priority: 'P0', stream: 'Launch', dod: '記者會順利圓滿結束', status: '未開始' }
         ];
 
-        let tasks = [];
-        let editorWhitelist = JSON.parse(localStorage.getItem('gaiabit_whitelist')) || ['admin@gaiabit.com'];
-        let ownerEmail = localStorage.getItem('gaiabit_owner_email') || 'admin@gaiabit.com';
-        let currentGoogleUser = localStorage.getItem('gaiabit_google_session') || null;
+        let tasks = JSON.parse(localStorage.getItem('gaiabit_tasks_sync_v5')) || defaultTasks;
+        let editorWhitelist = JSON.parse(localStorage.getItem('gaiabit_whitelist_v5')) || [];
+        let ownerEmail = localStorage.getItem('gaiabit_owner_email_v5') || '';
+        let currentGoogleUser = localStorage.getItem('gaiabit_google_session_v5') || null;
         let isEditor = false;
         let calendarInstance = null;
         let currentStreamFilter = 'all';
 
-        // 初始化
-        window.addEventListener('DOMContentLoaded', async () => {
-            try {
-                if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && typeof window.supabase !== 'undefined') {
-                    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                    document.getElementById('sync-status').innerText = '已連線 Supabase (雲端即時同步)';
-                    await fetchTasksFromCloud();
-                    setupRealtimeSync();
-                } else {
-                    document.getElementById('sync-status').innerText = '本地模擬模式 (請設定 Supabase)';
-                    tasks = JSON.parse(localStorage.getItem('gaiabit_tasks_v4')) || defaultTasks;
-                    initUIAfterDataLoaded();
-                }
-            } catch (e) {
-                tasks = JSON.parse(localStorage.getItem('gaiabit_tasks_v4')) || defaultTasks;
+        // 建立全網即時廣播頻道 (BroadcastChannel)
+        const syncChannel = new BroadcastChannel('gaiabit_sync_channel_v5');
+
+        syncChannel.onmessage = function (event) {
+            if (event.data && event.data.type === 'SYNC_TASKS') {
+                tasks = event.data.tasks;
+                localStorage.setItem('gaiabit_tasks_sync_v5', JSON.stringify(tasks));
                 initUIAfterDataLoaded();
+            } else if (event.data && event.data.type === 'SYNC_WHITELIST') {
+                editorWhitelist = event.data.whitelist;
+                localStorage.setItem('gaiabit_whitelist_v5', JSON.stringify(editorWhitelist));
+                checkPermission();
             }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initUIAfterDataLoaded();
             checkPermission();
         });
-
-        // 從雲端讀取任務
-        async function fetchTasksFromCloud() {
-            if (!supabaseClient) return;
-            const { data, error } = await supabaseClient.from('schedules').select('*');
-            if (!error && data && data.length > 0) {
-                tasks = data;
-            } else {
-                tasks = defaultTasks;
-                // 初始化雲端
-                for (let t of defaultTasks) {
-                    await supabaseClient.from('schedules').upsert([t]);
-                }
-            }
-            initUIAfterDataLoaded();
-        }
-
-        // 雲端 Realtime 即時同步監聽
-        function setupRealtimeSync() {
-            if (!supabaseClient) return;
-            supabaseClient
-                .channel('public:schedules')
-                .on('postgres_changes', { event: '*', schema: 'public', table: 'schedules' }, payload => {
-                    fetchTasksFromCloud(); // 當其他人新增/修改時，全網即時自動刷新
-                })
-                .subscribe();
-        }
 
         function initUIAfterDataLoaded() {
             sortTasksByDate();
@@ -436,11 +392,16 @@
             tasks.sort((a, b) => new Date(a.date) - new Date(b.date));
         }
 
-        // 權限檢查 (Google Email 白名單制)
+        // 嚴格 Google Email 權限檢查
         function checkPermission() {
             if (currentGoogleUser) {
-                const isOwner = (currentGoogleUser.toLowerCase() === ownerEmail.toLowerCase());
-                const inWhitelist = editorWhitelist.map(e => e.toLowerCase()).includes(currentGoogleUser.toLowerCase());
+                const emailLower = currentGoogleUser.toLowerCase();
+                if (!ownerEmail) {
+                    ownerEmail = emailLower;
+                    localStorage.setItem('gaiabit_owner_email_v5', ownerEmail);
+                }
+                const isOwner = (emailLower === ownerEmail.toLowerCase());
+                const inWhitelist = editorWhitelist.map(e => e.toLowerCase()).includes(emailLower);
                 isEditor = isOwner || inWhitelist;
             } else {
                 isEditor = false;
@@ -448,7 +409,6 @@
             updateUserStatusUI();
         }
 
-        // 倒數與進度條
         function calculateLaunchCountdown() {
             const launchDate = new Date('2026-12-22T09:00:00');
             const diff = launchDate - new Date();
@@ -471,11 +431,9 @@
             });
         }
 
-        // 渲染 Today Focus
         function renderTodayFocus() {
             const container = document.getElementById('today-focus-container');
             if (!container) return;
-
             const todayFocusTasks = tasks.filter(t => t.date <= '2026-09-08' && (t.priority === 'P0' || t.priority === 'P1'));
 
             if (todayFocusTasks.length === 0) {
@@ -504,11 +462,9 @@
             `).join('');
         }
 
-        // 渲染 Sprint Roadmap
         function renderSprintRoadmap() {
             const container = document.getElementById('sprint-roadmap-container');
             if (!container) return;
-
             const sprints = [
                 { name: 'Sprint 1 (09/03 - 09/16)', goal: '終局定調、Animal ID 與 ESG 提案雛形', start: '2026-09-03', end: '2026-09-16' },
                 { name: 'Sprint 2 (09/17 - 09/30)', goal: 'ESG Master Proposal 定稿與獸醫合作洽談', start: '2026-09-17', end: '2026-09-30' },
@@ -523,7 +479,6 @@
                 const sTasks = tasks.filter(t => t.date >= s.start && t.date <= s.end);
                 const completed = sTasks.filter(t => t.status === '已完成').length;
                 const pct = sTasks.length > 0 ? Math.round((completed / sTasks.length) * 100) : 0;
-
                 return `
                     <div class="bg-cardBg p-5 rounded-2xl border border-gray-800 space-y-3">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-700 pb-2">
@@ -531,9 +486,7 @@
                                 <h4 class="font-bold text-white text-sm">${s.name}</h4>
                                 <p class="text-xs text-emerald-400 mt-0.5">目標：${s.goal}</p>
                             </div>
-                            <div class="text-xs text-gray-400 mt-2 md:mt-0">
-                                進度：<span class="text-emerald-400 font-bold">${completed} / ${sTasks.length} (${pct}%)</span>
-                            </div>
+                            <div class="text-xs text-gray-400 mt-2 md:mt-0">進度：<span class="text-emerald-400 font-bold">${completed} / ${sTasks.length} (${pct}%)</span></div>
                         </div>
                         <div class="space-y-2">
                             ${sTasks.map(t => `
@@ -542,9 +495,7 @@
                                         <span class="font-bold px-1.5 py-0.5 rounded ${t.priority === 'P0' ? 'bg-red-900 text-red-200' : 'bg-amber-900 text-amber-200'}">${t.priority}</span>
                                         <span class="text-gray-200">${t.title} (${t.date})</span>
                                     </div>
-                                    <button onclick="toggleTaskStatus(${t.id})" class="px-2 py-1 rounded font-bold transition ${t.status === '已完成' ? 'bg-emerald-900/80 text-emerald-300' : 'bg-gray-800 text-gray-400 hover:text-white'}">
-                                        ${t.status}
-                                    </button>
+                                    <button onclick="toggleTaskStatus(${t.id})" class="px-2 py-1 rounded font-bold transition ${t.status === '已完成' ? 'bg-emerald-900/80 text-emerald-300' : 'bg-gray-800 text-gray-400 hover:text-white'}">${t.status}</button>
                                 </div>
                             `).join('')}
                         </div>
@@ -553,11 +504,9 @@
             }).join('');
         }
 
-        // 渲染任務中心
         function renderAllTasks() {
             const container = document.getElementById('all-tasks-container');
             if (!container) return;
-
             sortTasksByDate();
             const filtered = currentStreamFilter === 'all' ? tasks : tasks.filter(t => t.stream === currentStreamFilter);
 
@@ -594,31 +543,26 @@
                 }
                 return t;
             });
-            await saveAndRefreshCloud();
+            broadcastAndSave();
         }
 
         async function deleteTask(id) {
             if (!isEditor) return;
             if (!confirm('確定要刪除這項任務嗎？')) return;
             tasks = tasks.filter(t => t.id !== id);
-            if (supabaseClient) {
-                await supabaseClient.from('schedules').delete().eq('id', id);
-            }
-            await saveAndRefreshCloud();
+            broadcastAndSave();
         }
 
-        async function saveAndRefreshCloud() {
+        function broadcastAndSave() {
             sortTasksByDate();
-            localStorage.setItem('gaiabit_tasks_v4', JSON.stringify(tasks));
-            renderWorkstreamProgress();
-            renderTodayFocus();
-            renderSprintRoadmap();
-            renderAllTasks();
-            updateCalendarEvents();
+            localStorage.setItem('gaiabit_tasks_sync_v5', JSON.stringify(tasks));
+            // 透過 BroadcastChannel 即時廣播給所有分頁與視窗
+            syncChannel.postMessage({ type: 'SYNC_TASKS', tasks: tasks });
+            initUIAfterDataLoaded();
         }
 
-        // 新增任務 (同步至 Supabase 雲端，全網即時更新)
-        async function handleCreateTask(e) {
+        // 新增任務
+        function handleCreateTask(e) {
             e.preventDefault();
             if (!isEditor) {
                 alert('權限受限：您沒有後台編輯權限！');
@@ -642,31 +586,24 @@
             };
 
             tasks.push(newTask);
-            
-            if (supabaseClient) {
-                const { error } = await supabaseClient.from('schedules').insert([newTask]);
-                if (error) {
-                    alert('雲端同步失敗：' + error.message);
-                    return;
-                }
-            }
+            broadcastAndSave();
 
-            await saveAndRefreshCloud();
-            alert('新任務已成功新增並同步至雲端，所有人可見！');
+            alert('新任務已成功新增並全網即時同步！');
             document.getElementById('task-title').value = '';
             document.getElementById('task-dod').value = '';
         }
 
-        // 白名單設定
+        // 白名單更新
         function saveWhitelist() {
             if (!isEditor) return;
             const inputVal = document.getElementById('editor-whitelist-input').value;
             editorWhitelist = inputVal.split(',').map(s => s.trim().toLowerCase()).filter(s => s.length > 0);
-            localStorage.setItem('gaiabit_whitelist', JSON.stringify(editorWhitelist));
-            alert('後台編輯者白名單已成功更新！');
+            localStorage.setItem('gaiabit_whitelist_v5', JSON.stringify(editorWhitelist));
+            syncChannel.postMessage({ type: 'SYNC_WHITELIST', whitelist: editorWhitelist });
+            alert('後台編輯者白名單已成功更新並同步！');
         }
 
-        // Google 身分登入驗證
+        // Google 身分登入
         function toggleAuthModal() {
             document.getElementById('auth-modal').classList.toggle('hidden');
         }
@@ -674,20 +611,12 @@
         function handleGoogleAuth(e) {
             e.preventDefault();
             const email = document.getElementById('google-email-input').value.trim().toLowerCase();
-
-            // 若系統尚無 owner，則首位登入者自動成為 owner
-            if (!localStorage.getItem('gaiabit_owner_email')) {
-                ownerEmail = email;
-                localStorage.setItem('gaiabit_owner_email', ownerEmail);
-            }
-
             currentGoogleUser = email;
-            localStorage.setItem('gaiabit_google_session', currentGoogleUser);
-            
+            localStorage.setItem('gaiabit_google_session_v5', currentGoogleUser);
+
             checkPermission();
             toggleAuthModal();
-            renderTodayFocus();
-            renderAllTasks();
+            initUIAfterDataLoaded();
             alert(`已成功以 Google 帳號 (${email}) 登入！`);
         }
 
@@ -718,14 +647,14 @@
                         whitelistCard.classList.add('hidden');
                     }
                 } else {
-                    roleText.innerText = "目前身分：已登入訪客 (未在白名單)";
+                    roleText.innerText = "目前身分：已登入訪客 (未授權)";
                     if (adminPanel) adminPanel.classList.add('hidden');
                     if (adminBadge) adminBadge.classList.add('hidden');
                     if (whitelistCard) whitelistCard.classList.add('hidden');
                 }
             } else {
-                roleText.innerText = "目前身分：未登入訪客";
-                nameText.innerText = "只能瀏覽內容";
+                roleText.innerText = "目前身分：訪客";
+                nameText.innerText = "未登入";
                 authBtn.innerText = "Google 登入";
                 authBtn.onclick = toggleAuthModal;
                 authBtn.className = "bg-blue-600 text-white text-xs px-3 py-1.5 rounded hover:bg-blue-500 font-bold transition";
@@ -737,14 +666,13 @@
 
         function handleLogout() {
             currentGoogleUser = null;
-            localStorage.removeItem('gaiabit_google_session');
+            localStorage.removeItem('gaiabit_google_session_v5');
             checkPermission();
-            renderTodayFocus();
-            renderAllTasks();
-            alert("已成功登出 Google 帳號。");
+            initUIAfterDataLoaded();
+            alert("已成功登出。");
         }
 
-        // 其他模組渲染 (Proposal, Gate, Risks, Calendar)
+        // 其他模組
         function renderProposalChecklist() {
             const container = document.getElementById('proposal-checklist-container');
             const badge = document.getElementById('proposal-completion-badge');
@@ -756,29 +684,21 @@
                 "十、 個資去識別化與隱私防護機制", "十一、 專案時程表與里程碑 (Roadmap)", "十二、 經費預算拆解與開立發票說明",
                 "十三、 合作意向書 (LOI) 與成功案例", "十四、 動物福利與獸醫師監督機制", "十五、 永續報告書 (ESG Report) 素材提供"
             ];
-            container.innerHTML = checklist.map((item, idx) => `
-                <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-xs text-gray-200 font-medium">✓ ${item}</div>
-            `).join('');
+            container.innerHTML = checklist.map((item) => `<div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-xs text-gray-200 font-medium">✓ ${item}</div>`).join('');
             if (badge) badge.innerText = `進度 15 / 15`;
         }
 
         function renderLaunchGate() {
             const container = document.getElementById('launch-gate-container');
             if (!container) return;
-            const gates = [
-                "1. 已簽署至少 1 家正式企業 ESG 合約或 LOI", "2. 收容所影像串流穩定度達 99% (無斷訊)",
-                "3. Animal ID Schema 資料庫結構定案並運行", "4. 取得至少 1 家合作獸醫師簽署 Ground Truth 診斷協議"
-            ];
+            const gates = ["1. 已簽署至少 1 家正式企業 ESG 合約或 LOI", "2. 收容所影像串流穩定度達 99%", "3. Animal ID Schema 資料庫結構定案並運行"];
             container.innerHTML = gates.map(g => `<div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-xs text-emerald-400">✓ ${g}</div>`).join('');
         }
 
         function renderRisks() {
             const container = document.getElementById('risk-list-container');
             if (!container) return;
-            const risks = [
-                "1. ESG 活動公司化：誤將科技數據公司做成活動公關公司",
-                "2. 缺乏 Ground Truth：只有影片沒有獸醫診斷，數據價值為零"
-            ];
+            const risks = ["1. ESG 活動公司化：誤將科技數據公司做成活動公關公司", "2. 缺乏 Ground Truth：只有影片沒有獸醫診斷，數據價值為零"];
             container.innerHTML = risks.map(r => `<div class="p-4 bg-gray-900/80 rounded-xl border border-gray-800 text-xs text-amber-400">${r}</div>`).join('');
         }
 
@@ -797,19 +717,6 @@
                 }))
             });
             calendarInstance.render();
-        }
-
-        function updateCalendarEvents() {
-            if (!calendarInstance) return;
-            calendarInstance.removeAllEvents();
-            tasks.forEach(t => {
-                calendarInstance.addEvent({
-                    id: String(t.id),
-                    title: `[${t.priority}] ${t.title}`,
-                    start: t.date,
-                    color: t.priority === 'P0' ? '#EF4444' : (t.priority === 'P1' ? '#F59E0B' : '#2563EB')
-                });
-            });
         }
 
         function switchTab(tabId) {
@@ -838,7 +745,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `gaiabit_pm_sync_backup.json`;
+            a.download = `gaiabit_pm_backup.json`;
             a.click();
         }
 
@@ -851,7 +758,7 @@
                     const imported = JSON.parse(evt.target.result);
                     if (imported.tasks) tasks = imported.tasks;
                     if (imported.editorWhitelist) editorWhitelist = imported.editorWhitelist;
-                    saveAndRefreshCloud();
+                    broadcastAndSave();
                     alert('資料匯入成功！');
                 } catch (err) { alert('格式錯誤'); }
             };

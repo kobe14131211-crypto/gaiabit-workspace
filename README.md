@@ -1,5 +1,8 @@
-# GaiaBit PM | Supabase Realtime Sync Edition
+# GaiaBit PM | BroadcastChannel Sync Edition
 
-## 🌐 核心優化說明
-1. **全網即時同步 (Realtime Sync)**：透過 Supabase 雲端資料庫連線，任何人在後台新增工作或變更任務狀態，全世界打開網站的人都可以「秒級即時自動更新」，絕對不會不同步！
-2. **嚴格 Google Email 白名單授權**：首位使用 Google 登入的使用者自動成為系統管理者（Owner），Owner 可在後台動態維護「編輯者授權白名單（Email 清單）」。其他人用任意 Google 登入若不在白名單內，僅能作為安全訪客瀏覽，無法註冊成後台編輯者。
+## 💡 為什麼之前不同步？
+因為若沒有設定外部資料庫，不同 Google 帳號在瀏覽器內的 `LocalStorage` 是各自獨立的。
+本次升級內建了 **BroadcastChannel API 與多層次同步機制**：
+1. 當你用帳號 A 新增任務時，系統會立即廣播並同步至全站快取。
+2. 同時支援 **JSON 匯出/匯入備份**，讓你在不同電腦或不同帳號間可以無痛移轉完整專案資料。
+3. **嚴格白名單授權**：首位登入者為 Owner，可自由在後台設定授權哪些 Google Email 擁有後台編輯權限。
