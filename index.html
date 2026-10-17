@@ -16,7 +16,9 @@
                         cardBg: '#1F2937',
                         accentBlue: '#2563EB',
                         ntueAccent: '#00D4B2',
-                        ntueBlue: '#0A2540'
+                        ntueBlue: '#0A2540',
+                        p0Red: '#EF4444',
+                        p1Orange: '#F59E0B'
                     }
                 }
             }
@@ -34,7 +36,7 @@
 <body class="bg-darkBg text-gray-100 font-sans antialiased min-h-screen flex">
 
     <!-- 左側側邊欄 -->
-    <aside class="w-64 bg-sidebarBg border-r border-gray-800 flex flex-col justify-between flex-shrink-0 min-h-screen">
+    <aside class="w-64 bg-sidebarBg border-r border-gray-800 flex flex-col justify-between flex-shrink-0 min-h-screen sticky top-0 h-screen overflow-y-auto">
         <div class="p-5 space-y-6">
             <!-- Header Badge -->
             <div class="flex items-center space-x-3">
@@ -47,69 +49,85 @@
                 </div>
             </div>
 
+            <!-- 敘事核心小標 -->
+            <div class="bg-gray-900/80 p-3 rounded-lg border border-gray-800 text-xs space-y-1">
+                <div class="text-emerald-400 font-bold">今天：讓牠被看見</div>
+                <div class="text-blue-400 font-bold">現在：留下有意義資料</div>
+                <div class="text-amber-400 font-bold">未來：AI 早期疾病預警</div>
+            </div>
+
             <!-- 選單 -->
             <nav class="space-y-1 text-sm font-medium">
                 <button onclick="switchTab('today')" id="nav-today" class="sidebar-btn active w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-gray-800 text-white transition">
-                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                    <span>今日總覽</span>
+                    <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                    <span>🔥 Today Focus (今日焦點)</span>
                 </button>
                 <button onclick="switchTab('roadmap')" id="nav-roadmap" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
                     <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>雙週 Roadmap</span>
+                    <span>雙週 Sprint Roadmap</span>
                 </button>
                 <button onclick="switchTab('tasks')" id="nav-tasks" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
                     <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>任務中心</span>
+                    <span>76 個實際任務中心</span>
                 </button>
                 <button onclick="switchTab('calendar')" id="nav-calendar" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
                     <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>行事曆</span>
+                    <span>全景行事曆</span>
                 </button>
-                <button onclick="switchTab('temp')" id="nav-temp" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                <button onclick="switchTab('proposal-checklist')" id="nav-proposal-checklist" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
                     <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>E・臨時事項</span>
-                </button>
-                <button onclick="switchTab('esg')" id="nav-esg" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
-                    <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>Animal ESG</span>
+                    <span>ESG Master Proposal (15章)</span>
                 </button>
                 <button onclick="switchTab('data')" id="nav-data" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
                     <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>Animal Data</span>
+                    <span>Animal Data 專區</span>
                 </button>
-                <button onclick="switchTab('launch')" id="nav-launch" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                <button onclick="switchTab('launch-gate')" id="nav-launch-gate" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
                     <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>12 月 Launch</span>
+                    <span>Launch Gate (10大門檻)</span>
+                </button>
+                <button onclick="switchTab('social')" id="nav-social" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                    <span class="w-2 h-2 rounded-full bg-gray-600"></span>
+                    <span>社群心理路徑</span>
                 </button>
                 <button onclick="switchTab('business')" id="nav-business" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
                     <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>商業模式</span>
+                    <span>商業模式 (NOW/NEXT/FUTURE)</span>
                 </button>
-                <button onclick="switchTab('risk')" id="nav-risk" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                <button onclick="switchTab('carbon')" id="nav-carbon" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
                     <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>風險與決策</span>
+                    <span>碳與附加價值</span>
                 </button>
-                <button onclick="switchTab('weekly')" id="nav-weekly" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                <button onclick="switchTab('risks')" id="nav-risks" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
                     <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>每週進度報告</span>
+                    <span>15 大 BUG 與風險決策</span>
                 </button>
-                <button onclick="switchTab('drive')" id="nav-drive" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                <button onclick="switchTab('ideagate')" id="nav-ideagate" class="sidebar-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition">
                     <span class="w-2 h-2 rounded-full bg-gray-600"></span>
-                    <span>共用資料夾</span>
+                    <span>💡 Idea Gate (新點子過濾)</span>
                 </button>
             </nav>
         </div>
 
-        <!-- 底側身分狀態 -->
-        <div class="p-4 border-t border-gray-800 bg-gray-900/50">
+        <!-- 底側身分狀態與備份 -->
+        <div class="p-4 border-t border-gray-800 bg-gray-900/50 space-y-3">
             <div id="user-status-card" class="flex justify-between items-center">
                 <div>
                     <p id="user-role-text" class="text-xs text-gray-400">目前身分：唯讀訪客</p>
                     <p id="user-name-text" class="text-xs font-bold text-gray-200">只能瀏覽內容</p>
                 </div>
                 <button onclick="toggleAuthModal()" id="auth-btn" class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded hover:bg-blue-500 font-bold transition">
-                    設定/登入
+                    登入 / 註冊
                 </button>
+            </div>
+            <div class="flex space-x-2 pt-1 border-t border-gray-800">
+                <button onclick="exportDataJSON()" class="flex-1 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs py-1.5 rounded text-center font-medium transition">
+                    📥 匯出 JSON
+                </button>
+                <label class="flex-1 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs py-1.5 rounded text-center font-medium transition cursor-pointer">
+                    📤 匯入 JSON
+                    <input type="file" accept=".json" onchange="importDataJSON(event)" class="hidden">
+                </label>
             </div>
         </div>
     </aside>
@@ -117,150 +135,334 @@
     <!-- 右側主要區域 -->
     <main class="flex-1 p-8 overflow-y-auto max-w-6xl">
         
-        <!-- 管理者專屬新增任務區塊（預設隱藏） -->
-        <div id="admin-add-task-panel" class="hidden mb-8 bg-cardBg p-6 rounded-xl border border-blue-500/30 shadow-lg space-y-4">
+        <!-- 頂部資訊列： Launch 倒數與 Workstream 進度條 -->
+        <header class="mb-8 space-y-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-cardBg p-5 rounded-2xl border border-gray-800 shadow-lg">
+                <div>
+                    <div class="flex items-center space-x-3">
+                        <h2 class="text-xl font-bold text-white">GaiaBit 戰略推動中央控制台</h2>
+                        <span id="admin-badge" class="hidden text-xs bg-emerald-900 text-emerald-300 px-2.5 py-0.5 rounded font-bold border border-emerald-700">⚡ 管理者已登入</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-1">目前虛擬模擬起點時間：<span id="current-sim-date" class="text-emerald-400 font-mono font-bold">2026-09-03</span> | 戰略目標：累積全球稀缺數據與商業化閉環</p>
+                </div>
+                <div class="mt-4 md:mt-0 bg-gradient-to-r from-blue-900/60 to-emerald-900/60 border border-blue-700 px-5 py-3 rounded-xl text-center">
+                    <span class="text-xs text-blue-300 font-bold block">🎯 距離 2026/12/22 Launch 還有</span>
+                    <span id="launch-countdown" class="text-2xl font-black text-emerald-400">計算中...</span>
+                </div>
+            </div>
+
+            <!-- 4大 Workstream 進度條 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="bg-cardBg p-3 rounded-xl border border-gray-800">
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-gray-400">🧬 Data Stream</span>
+                        <span id="prog-data-val" class="text-blue-400 font-bold">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                        <div id="prog-data-bar" class="bg-blue-500 h-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="bg-cardBg p-3 rounded-xl border border-gray-800">
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-gray-400">🌱 ESG Stream</span>
+                        <span id="prog-esg-val" class="text-emerald-400 font-bold">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                        <div id="prog-esg-bar" class="bg-emerald-500 h-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="bg-cardBg p-3 rounded-xl border border-gray-800">
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-gray-400">📱 Platform Stream</span>
+                        <span id="prog-platform-val" class="text-amber-400 font-bold">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                        <div id="prog-platform-bar" class="bg-amber-500 h-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="bg-cardBg p-3 rounded-xl border border-gray-800">
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-gray-400">🚀 Launch Stream</span>
+                        <span id="prog-launch-val" class="text-purple-400 font-bold">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                        <div id="prog-launch-bar" class="bg-purple-500 h-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 管理者新增工作表單 (登入後顯示) -->
+        <div id="admin-add-task-panel" class="hidden mb-8 bg-cardBg p-6 rounded-2xl border border-blue-500/40 shadow-xl space-y-4">
             <div class="flex justify-between items-center border-b border-gray-700 pb-3">
                 <h3 class="text-sm font-bold text-ntueAccent flex items-center space-x-2">
-                    <span>⚡ 管理者模式：新增工作與行程事件</span>
+                    <span>⚡ 後台編輯模式：新增工作 / 專案任務</span>
                 </h3>
-                <span class="text-xs bg-emerald-900/80 text-emerald-300 border border-emerald-700 px-2.5 py-0.5 rounded font-medium">編輯權限已解鎖</span>
+                <span class="text-xs bg-emerald-900/80 text-emerald-300 border border-emerald-700 px-2.5 py-0.5 rounded font-medium">您可以進行內容新增與刪除</span>
             </div>
             <form onsubmit="handleCreateTask(event)" class="grid md:grid-cols-4 gap-3">
-                <input type="text" id="task-title" placeholder="工作名稱 (例: 拜訪大溪在地豆干業者洽談ESG)" required class="md:col-span-2 bg-gray-900 border border-gray-700 p-2.5 rounded text-sm text-gray-200 focus:outline-none focus:border-blue-500">
-                <input type="date" id="task-date" required class="bg-gray-900 border border-gray-700 p-2.5 rounded text-sm text-gray-200 focus:outline-none focus:border-blue-500">
-                <select id="task-category" class="bg-gray-900 border border-gray-700 p-2.5 rounded text-sm text-gray-200 focus:outline-none focus:border-blue-500">
-                    <option value="today">今日總覽</option>
-                    <option value="roadmap">雙週 Roadmap</option>
-                    <option value="tasks">任務中心</option>
-                    <option value="esg">Animal ESG</option>
-                    <option value="data">Animal Data</option>
-                    <option value="launch">12 月 Launch</option>
+                <input type="text" id="task-title" placeholder="任務名稱 (例: 確定 Animal ID Schema 規格)" required class="md:col-span-2 bg-gray-900 border border-gray-700 p-2.5 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-blue-500">
+                <input type="date" id="task-date" value="2026-09-03" required class="bg-gray-900 border border-gray-700 p-2.5 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-blue-500">
+                <select id="task-priority" class="bg-gray-900 border border-gray-700 p-2.5 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-blue-500">
+                    <option value="P0">P0 (今天必做 / 核心阻告)</option>
+                    <option value="P1">P1 (高優先級 / 雙週關卡)</option>
+                    <option value="P2">P2 (一般推進)</option>
                 </select>
-                <button type="submit" class="md:col-span-4 bg-accentBlue hover:bg-blue-500 text-white font-bold py-2.5 rounded text-sm transition shadow-md">
-                    新增工作與行事曆同步
+                <select id="task-stream" class="bg-gray-900 border border-gray-700 p-2.5 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-blue-500">
+                    <option value="Data">🧬 Data Stream</option>
+                    <option value="ESG">🌱 ESG Stream</option>
+                    <option value="Platform">📱 Platform Stream</option>
+                    <option value="Launch">🚀 Launch Stream</option>
+                </select>
+                <input type="text" id="task-dod" placeholder="Definition of Done (驗收標準，例：已完成 Schema 文件簽核)" required class="md:col-span-3 bg-gray-900 border border-gray-700 p-2.5 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-blue-500">
+                <button type="submit" class="bg-accentBlue hover:bg-blue-500 text-white font-bold py-2.5 rounded-lg text-sm transition shadow-md">
+                    新增任務
                 </button>
             </form>
         </div>
 
-        <!-- 頁籤一：今日總覽 -->
+        <!-- 頁籤一：🔥 Today Focus (今日焦點) -->
         <div id="content-today" class="tab-content space-y-8">
-            <!-- 頂部精神 Banner -->
-            <div class="bg-gradient-to-r from-ntueBlue to-blue-900 p-8 rounded-2xl shadow-xl text-white space-y-3 relative overflow-hidden border border-blue-800">
-                <h2 class="text-2xl md:text-3xl font-extrabold tracking-wide">用科技串起人、動物與地方，讓問題成為更好的未來</h2>
-                <p class="text-blue-200 text-sm leading-relaxed max-w-3xl">
-                    結合地方治理、企業 ESG 價值與全球極度稀缺之收容所「群體行為數據」，打造永續動保生態系，最終進軍百億美金 AI 寵物醫療預警市場。
-                </p>
-            </div>
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                            <span>🔥 Today Focus (今日關鍵 P0 / P1 任務)</span>
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-1">根據電腦與系統日期（2026/09/03），自動過濾出「今日必做、逾期與未來 3 天」的最重要工作。</p>
+                    </div>
+                    <span class="text-xs bg-red-900/60 text-red-300 border border-red-700 px-3 py-1 rounded-full font-bold">自動動態計算中</span>
+                </div>
 
-            <!-- 三大核心業務 -->
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-cardBg p-6 rounded-xl border border-gray-800 space-y-2">
-                    <span class="text-xl font-bold text-ntueAccent">01</span>
-                    <h3 class="font-bold text-white text-base">企業 ESG 專案對接</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed">對接企業 ESG 預算，結合員工參與（遠端觀看、舊棉被碳減排回收），輸出 SROI 量化成果，建立穩定現金流。</p>
-                </div>
-                <div class="bg-cardBg p-6 rounded-xl border border-gray-800 space-y-2">
-                    <span class="text-xl font-bold text-ntueAccent">02</span>
-                    <h3 class="font-bold text-white text-base">12月公開記者會</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed">以大溪示範場域為核心，串聯在地豆干、農產與文創伴手禮，透過心理學社群行銷，打造年度地方共好發表大秀。</p>
-                </div>
-                <div class="bg-cardBg p-6 rounded-xl border border-gray-800 space-y-2">
-                    <span class="text-xl font-bold text-ntueAccent">03</span>
-                    <h3 class="font-bold text-white text-base">全球稀缺 AI 醫療大數據</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed">24 小時連續記錄收容所多犬貓群體互動行為，建立全球罕見訓練集，開發 AI 寵物疾病早期預警系統。</p>
-                </div>
-            </div>
-
-            <!-- 今日待辦事項與動態列表 -->
-            <div class="bg-cardBg p-6 rounded-xl border border-gray-800 space-y-4">
-                <h3 class="font-bold text-white text-base border-b border-gray-700 pb-3">📌 今日重點工作列表</h3>
-                <div id="today-tasks-container" class="space-y-3">
-                    <!-- 動態渲染 -->
+                <div id="today-focus-container" class="space-y-3">
+                    <!-- 動態渲染 Today Focus -->
                 </div>
             </div>
         </div>
 
-        <!-- 頁籤二：雙週 Roadmap -->
+        <!-- 頁籤二：雙週 Sprint Roadmap -->
         <div id="content-roadmap" class="tab-content hidden space-y-6">
-            <h2 class="text-xl font-bold text-white">🗓️ 雙週 Roadmap 與關鍵里程碑</h2>
-            <div id="roadmap-tasks-container" class="space-y-3"></div>
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-white">🗓️ 雙週 Sprint Roadmap (2026/09/03 - 12/31)</h2>
+                <span class="text-xs bg-blue-900/60 text-blue-300 border border-blue-800 px-3 py-1 rounded">8 個雙週 Sprint 漸進式推進</span>
+            </div>
+            <div id="sprint-roadmap-container" class="space-y-6"></div>
         </div>
 
-        <!-- 頁籤三：任務中心 -->
+        <!-- 頁籤三：76 個實際任務中心 -->
         <div id="content-tasks" class="tab-content hidden space-y-6">
-            <h2 class="text-xl font-bold text-white">✅ 任務中心全覽</h2>
-            <div id="tasks-all-container" class="space-y-3"></div>
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-white">✅ 全數 76 個實際任務中心 (含 DoD 驗收標準)</h2>
+                <div class="flex space-x-2">
+                    <button onclick="filterTasksByStream('all')" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded text-gray-200">全部</button>
+                    <button onclick="filterTasksByStream('Data')" class="text-xs bg-blue-900/80 hover:bg-blue-800 px-3 py-1 rounded text-blue-300">Data</button>
+                    <button onclick="filterTasksByStream('ESG')" class="text-xs bg-emerald-900/80 hover:bg-emerald-800 px-3 py-1 rounded text-emerald-300">ESG</button>
+                    <button onclick="filterTasksByStream('Platform')" class="text-xs bg-amber-900/80 hover:bg-amber-800 px-3 py-1 rounded text-amber-300">Platform</button>
+                    <button onclick="filterTasksByStream('Launch')" class="text-xs bg-purple-900/80 hover:bg-purple-800 px-3 py-1 rounded text-purple-300">Launch</button>
+                </div>
+            </div>
+            <div id="all-tasks-container" class="space-y-3"></div>
         </div>
 
-        <!-- 頁籤四：行事曆 (FullCalendar 整合) -->
+        <!-- 頁籤四：全景行事曆 -->
         <div id="content-calendar" class="tab-content hidden space-y-6">
             <div class="flex justify-between items-center">
-                <h2 class="text-xl font-bold text-white">📆 專案關鍵行程日曆</h2>
-                <span class="text-xs bg-gray-800 text-gray-400 px-3 py-1 rounded">所有工作排程自動同步至此月曆</span>
+                <h2 class="text-xl font-bold text-white">📆 全景行事曆 (FullCalendar 整合)</h2>
+                <span class="text-xs bg-gray-800 text-gray-400 px-3 py-1 rounded">所有 76+ 個 Task 的 Deadline 日曆排程</span>
             </div>
-            <div class="bg-cardBg p-6 rounded-xl border border-gray-800">
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800">
                 <div id="calendar-el"></div>
             </div>
         </div>
 
-        <!-- 頁籤五：E・臨時事項 -->
-        <div id="content-temp" class="tab-content hidden space-y-6">
-            <h2 class="text-xl font-bold text-white">⚡ 臨時事項與緊急應變記錄</h2>
-            <div id="temp-tasks-container" class="space-y-3"></div>
-        </div>
-
-        <!-- 頁籤六：Animal ESG -->
-        <div id="content-esg" class="tab-content hidden space-y-6">
-            <h2 class="text-xl font-bold text-white">🌱 Animal ESG 模組與 SROI 減碳規劃</h2>
-            <div class="bg-cardBg p-6 rounded-xl border border-gray-800 text-sm text-gray-300 space-y-3">
-                <p>• <strong>舊棉被回收碳減排計算</strong>：集結企業員工舊棉被送往場域，量化碳減排證明。</p>
-                <p>• <strong>專屬司機接送碳排追蹤</strong>：偏遠地區接送服務碳排統計，包裝成企業綠色報告素材。</p>
+        <!-- 頁籤五：ESG Master Proposal Checklist (15章) -->
+        <div id="content-proposal-checklist" class="tab-content hidden space-y-6">
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                    <h2 class="text-xl font-bold text-white">📋 Animal ESG Master Proposal Checklist (15 大章節)</h2>
+                    <span id="proposal-completion-badge" class="text-xs bg-emerald-900 text-emerald-300 px-3 py-1 rounded font-bold">進度 0 / 15</span>
+                </div>
+                <p class="text-xs text-gray-400">專為大型企業 CSR/ESG 部門設計的完全版 Proposal 檢核清單，具備完整法規、SROI 與細節資料包。</p>
+                <div id="proposal-checklist-container" class="grid md:grid-cols-2 gap-4"></div>
             </div>
         </div>
 
-        <!-- 頁籤七：Animal Data -->
+        <!-- 頁籤六：Animal Data 專區 -->
         <div id="content-data" class="tab-content hidden space-y-6">
-            <h2 class="text-xl font-bold text-white">🧬 Animal Data 全球群體行為資料庫</h2>
-            <div class="bg-cardBg p-6 rounded-xl border border-gray-800 text-sm text-gray-300 space-y-3">
-                <p>• <strong>護城河</strong>：收容所 24 小時多犬貓連續行為紀錄，突破市面單一寵物攝影機侷限。</p>
-                <p>• <strong>商業授權</strong>：對接國際寵物醫療機構與保險公司，做 AI 疾病早期預警。</p>
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
+                <h2 class="text-xl font-bold text-white">🧬 Animal Data 數據管線與資產定義</h2>
+                <div class="grid md:grid-cols-4 gap-4 text-xs">
+                    <div class="bg-gray-900/80 p-4 rounded-xl border border-blue-800 space-y-2">
+                        <div class="font-bold text-blue-400 text-sm">1. Animal ID</div>
+                        <p class="text-gray-400 leading-relaxed">個體唯一識別。包含晶片號、花色、入所日期、生理特徵備註。</p>
+                    </div>
+                    <div class="bg-gray-900/80 p-4 rounded-xl border border-emerald-800 space-y-2">
+                        <div class="font-bold text-emerald-400 text-sm">2. Behavior Video</div>
+                        <p class="text-gray-400 leading-relaxed">24 小時連續影像紀錄，標註進食、休息、衝突、活動頻率。</p>
+                    </div>
+                    <div class="bg-gray-900/80 p-4 rounded-xl border border-amber-800 space-y-2">
+                        <div class="font-bold text-amber-400 text-sm">3. Health Ground Truth</div>
+                        <p class="text-gray-400 leading-relaxed">獸醫與照護員診斷記錄（病歷、投藥、疫苗、體重變化與血檢）。</p>
+                    </div>
+                    <div class="bg-gray-900/80 p-4 rounded-xl border border-purple-800 space-y-2">
+                        <div class="font-bold text-purple-400 text-sm">4. Data Quality Index</div>
+                        <p class="text-gray-400 leading-relaxed">資料完整度品質指標。不犯「影片多＝資料貴」的錯，只有 Ground Truth 對接才是真資產。</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- 其他頁籤 (預留內容) -->
-        <div id="content-launch" class="tab-content hidden space-y-6"><h2 class="text-xl font-bold text-white">🚀 12 月 Launch 籌備進度</h2></div>
-        <div id="content-business" class="tab-content hidden space-y-6"><h2 class="text-xl font-bold text-white">💼 商業模式與變現試算</h2></div>
-        <div id="content-risk" class="tab-content hidden space-y-6"><h2 class="text-xl font-bold text-white">🛡️ 風險與決策控制</h2></div>
-        <div id="content-weekly" class="tab-content hidden space-y-6"><h2 class="text-xl font-bold text-white">📊 每週進度報告彙整</h2></div>
-        <div id="content-drive" class="tab-content hidden space-y-6"><h2 class="text-xl font-bold text-white">📂 共用資料夾與文件檔案</h2></div>
+        <!-- 頁籤七：Launch Gate (10大門檻) -->
+        <div id="content-launch-gate" class="tab-content hidden space-y-6">
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                    <h2 class="text-xl font-bold text-white">🚀 Launch Gate (12月發布會 10 大硬性門檻)</h2>
+                    <span id="gate-pass-badge" class="text-xs bg-amber-900 text-amber-300 px-3 py-1 rounded font-bold">通過 0 / 10</span>
+                </div>
+                <p class="text-xs text-gray-400">若 12 月成熟度未達標，強制改為「Animal Data Initiative Launch」，絕不盲目硬硬上市。</p>
+                <div id="launch-gate-container" class="space-y-3"></div>
+            </div>
+        </div>
+
+        <!-- 頁籤八：社群心理路徑 -->
+        <div id="content-social" class="tab-content hidden space-y-6">
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
+                <h2 class="text-xl font-bold text-white">📣 社群心理路徑與月度敘事轉折</h2>
+                <div class="grid md:grid-cols-4 gap-4 text-xs">
+                    <div class="bg-gray-900/80 p-4 rounded-xl border border-gray-800 space-y-2">
+                        <span class="text-xs bg-red-900 text-red-300 px-2 py-0.5 rounded font-bold">9月：問題感</span>
+                        <div class="font-bold text-gray-200">看見收容所盲區</div>
+                        <p class="text-gray-400 leading-relaxed">不賣慘，展示「看不見的日常」與人力瓶頸。</p>
+                    </div>
+                    <div class="bg-gray-900/80 p-4 rounded-xl border border-gray-800 space-y-2">
+                        <span class="text-xs bg-blue-900 text-blue-300 px-2 py-0.5 rounded font-bold">10月：幕後真實</span>
+                        <div class="font-bold text-gray-200">鏡頭與資料建立</div>
+                        <p class="text-gray-400 leading-relaxed">直擊工程師裝機、Animal ID 設計與志工紀錄。</p>
+                    </div>
+                    <div class="bg-gray-900/80 p-4 rounded-xl border border-gray-800 space-y-2">
+                        <span class="text-xs bg-emerald-900 text-emerald-300 px-2 py-0.5 rounded font-bold">11月：實證呈現</span>
+                        <div class="font-bold text-gray-200">ESG 與大溪改變</div>
+                        <p class="text-gray-400 leading-relaxed">首家企業舊物回收、大溪在地伴手禮合作實況。</p>
+                    </div>
+                    <div class="bg-gray-900/80 p-4 rounded-xl border border-gray-800 space-y-2">
+                        <span class="text-xs bg-purple-900 text-purple-300 px-2 py-0.5 rounded font-bold">12月：Social Proof</span>
+                        <div class="font-bold text-gray-200">倒數與聯合宣告</div>
+                        <p class="text-gray-400 leading-relaxed">公布合作企業名單與 Launch 計畫。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁籤九：商業模式專區 -->
+        <div id="content-business" class="tab-content hidden space-y-6">
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
+                <h2 class="text-xl font-bold text-white">💼 商業模式分層 (NOW / NEXT / FUTURE)</h2>
+                <div class="grid md:grid-cols-3 gap-6 text-xs">
+                    <div class="bg-gray-900/80 p-5 rounded-xl border border-blue-800 space-y-3">
+                        <span class="text-xs bg-blue-900 text-blue-300 px-2.5 py-0.5 rounded font-bold">NOW (現在)</span>
+                        <h4 class="text-sm font-bold text-white">Animal ESG 專案 & 場域數位化</h4>
+                        <p class="text-gray-400 leading-relaxed">• 企業 ESG 採購 (15-30萬/案)<br>• SROI 量化報告與員工參與<br>• 場域數位化軟硬體整備</p>
+                    </div>
+                    <div class="bg-gray-900/80 p-5 rounded-xl border border-emerald-800 space-y-3">
+                        <span class="text-xs bg-emerald-900 text-emerald-300 px-2.5 py-0.5 rounded font-bold">NEXT (下一步)</span>
+                        <h4 class="text-sm font-bold text-white">Impact OS & 認養後訂閱</h4>
+                        <p class="text-gray-400 leading-relaxed">• 收容所 Impact OS 訂閱<br>• 認養人端健康追蹤月費<br>• LiveCam 遠端互動進階功能</p>
+                    </div>
+                    <div class="bg-gray-900/80 p-5 rounded-xl border border-purple-800 space-y-3">
+                        <span class="text-xs bg-purple-900 text-purple-300 px-2.5 py-0.5 rounded font-bold">FUTURE (終局)</span>
+                        <h4 class="text-sm font-bold text-white">Animal Data / AI 授權</h4>
+                        <p class="text-gray-400 leading-relaxed">• AI 早期疾病預警模型授權<br>• 獸醫院與寵物保險公司 API 串接<br>• 全球多犬貓群體行為資產</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁籤十：碳與附加價值專區 -->
+        <div id="content-carbon" class="tab-content hidden space-y-6">
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
+                <h2 class="text-xl font-bold text-white">🌱 碳與附加價值 (嚴格邊界宣稱)</h2>
+                <div class="grid md:grid-cols-2 gap-6 text-xs">
+                    <div class="bg-emerald-950/30 border border-emerald-800/80 p-5 rounded-xl space-y-2">
+                        <h4 class="font-bold text-emerald-400 text-sm">✅ 合理且建議宣稱項目</h4>
+                        <p class="text-gray-300 leading-relaxed">• 企業員工舊棉被集中配送送收容所 (避免個別快遞碳排)<br>• Shelter Mobility 巡查路線最佳化<br>• 遠端直播觀看減少民眾無效往返車程</p>
+                    </div>
+                    <div class="bg-red-950/30 border border-red-800/80 p-5 rounded-xl space-y-2">
+                        <h4 class="font-bold text-red-400 text-sm">❌ 嚴禁亂宣稱項目 (避免 Greenwashing)</h4>
+                        <p class="text-gray-300 leading-relaxed">• 絕不宣稱獲得正式「碳權 (Carbon Credits)」<br>• 不誇大未認證之碳抵換額度<br>• 僅定位為「範疇三 (Scope 3) 員工減碳與資源循環實踐」</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁籤十一：15 大 BUG 與風險決策 -->
+        <div id="content-risks" class="tab-content hidden space-y-6">
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
+                <h2 class="text-xl font-bold text-white">🛡️ 15 大戰略 BUG 與風險決策檢視</h2>
+                <div id="risk-list-container" class="grid md:grid-cols-2 gap-4 text-xs"></div>
+            </div>
+        </div>
+
+        <!-- 頁籤十二：💡 Idea Gate (新點子過濾) -->
+        <div id="content-ideagate" class="tab-content hidden space-y-6">
+            <div class="bg-cardBg p-6 rounded-2xl border border-gray-800 space-y-4">
+                <h2 class="text-xl font-bold text-white">💡 Idea Gate (新點子評估過濾器)</h2>
+                <p class="text-xs text-gray-400">當您突發奇想新功能時，回答以下四個問題。只要沒有回答至少一個「Yes」，該 Idea 請直接放入 Backlog，絕不干擾當前 Sprint！</p>
+                <form onsubmit="evaluateIdea(event)" class="bg-gray-900/80 p-5 rounded-xl border border-gray-800 space-y-4 text-xs">
+                    <div>
+                        <label class="block font-bold text-gray-200 mb-1">新點子/新功能名稱：</label>
+                        <input type="text" id="idea-name" required placeholder="例如：增加寵物 AI 汪汪叫翻譯功能" class="w-full bg-gray-800 border border-gray-700 p-2.5 rounded text-gray-200">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-2 text-gray-300">
+                            <input type="checkbox" id="q1" class="rounded border-gray-700 bg-gray-800">
+                            <span>1. 能否增加「Animal ID / Ground Truth」高質量數據累積？</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-300">
+                            <input type="checkbox" id="q2" class="rounded border-gray-700 bg-gray-800">
+                            <span>2. 能否直接促進「大溪/合作場域」落地或增加場域？</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-300">
+                            <input type="checkbox" id="q3" class="rounded border-gray-700 bg-gray-800">
+                            <span>3. 能否在 30 天內形成企業 ESG 直接簽單收入？</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-300">
+                            <input type="checkbox" id="q4" class="rounded border-gray-700 bg-gray-800">
+                            <span>4. 能否提升當前 Data Quality 指標或成交轉換？</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded text-xs transition">評估判決</button>
+                </form>
+                <div id="idea-result" class="hidden p-4 rounded-xl text-xs font-bold"></div>
+            </div>
+        </div>
 
     </main>
 
     <!-- 帳號設定 / 管理者登入 Modal -->
-    <div id="auth-modal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div id="auth-modal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50 p-4">
         <div class="bg-cardBg border border-gray-700 p-8 rounded-2xl w-full max-w-md shadow-2xl space-y-5">
             <div class="flex justify-between items-center border-b border-gray-700 pb-3">
-                <h3 id="modal-title" class="text-lg font-bold text-white">首次使用：設定管理者帳號密碼</h3>
+                <h3 id="modal-title" class="text-lg font-bold text-white">設定管理者帳號密碼</h3>
                 <button onclick="toggleAuthModal()" class="text-gray-400 hover:text-white font-bold">✕</button>
             </div>
             
             <p id="modal-desc" class="text-xs text-gray-400 leading-relaxed">
-                這是系統首次啟動！請設定專屬的管理者帳號與密碼。日後只有您登入才能新增/編輯/刪除工作，其他人僅能瀏覽。
+                請設定或輸入您的管理者帳號密碼。登入後即可在後台新增、修改與刪除工作，其他人僅有唯讀權限。
             </p>
 
             <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-gray-300 mb-1">管理者帳號 (Email 或 用戶名)</label>
-                    <input type="text" id="auth-user" required placeholder="admin" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded text-sm text-gray-200 focus:outline-none focus:border-blue-500">
+                    <label class="block text-xs font-bold text-gray-300 mb-1">管理者帳號</label>
+                    <input type="text" id="auth-user" required placeholder="admin" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-300 mb-1">設定密碼</label>
-                    <input type="password" id="auth-pass" required placeholder="••••••••" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded text-sm text-gray-200 focus:outline-none focus:border-blue-500">
+                    <label class="block text-xs font-bold text-gray-300 mb-1">密碼</label>
+                    <input type="password" id="auth-pass" required placeholder="••••••••" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-blue-500">
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="toggleAuthModal()" class="px-4 py-2 border border-gray-700 rounded text-xs text-gray-300 hover:bg-gray-800">取消</button>
-                    <button type="submit" id="modal-submit-btn" class="bg-accentBlue hover:bg-blue-500 text-white px-5 py-2 rounded text-xs font-bold transition">
-                        儲存管理者設定
+                    <button type="button" onclick="toggleAuthModal()" class="px-4 py-2 border border-gray-700 rounded-lg text-xs text-gray-300 hover:bg-gray-800">取消</button>
+                    <button type="submit" id="modal-submit-btn" class="bg-accentBlue hover:bg-blue-500 text-white px-5 py-2 rounded-lg text-xs font-bold transition">
+                        確認登入 / 設定
                     </button>
                 </div>
             </form>
@@ -269,27 +471,413 @@
 
     <!-- 腳本邏輯 -->
     <script>
-        // 1. 本地狀態管理
-        let tasks = JSON.parse(localStorage.getItem('gaiabit_tasks')) || [
-            { id: 1, title: '完成專業企劃書撰寫（目的、作法、結果、效益與實質受益人）', date: '2026-10-25', category: 'today', status: '進行中' },
-            { id: 2, title: '建立 10 家目標企業 ESG 窗口名單與聯繫策略', date: '2026-11-05', category: 'roadmap', status: '未開始' },
-            { id: 3, title: '大溪場域現地場勘與狗腳印協會對接', date: '2026-11-15', category: 'tasks', status: '未開始' },
-            { id: 4, title: '規劃「員工舊棉被碳減排回收」與「專屬司機碳排計算」方案', date: '2026-11-25', category: 'esg', status: '未開始' },
-            { id: 5, title: '舉辦 12 月公開記者會暨企業 ESG 聯合宣言', date: '2026-12-28', category: 'launch', status: '未開始' }
+        // -----------------------------------------------------------------
+        // 1. 初始化 76+ 個實際任務資料庫 (2026/09/03 - 12/31)
+        // -----------------------------------------------------------------
+        const defaultTasks = [
+            // Sprint 1 (09/03 - 09/16)
+            { id: 101, title: '召開戰略會商，定調核心敘事「看見 -> 資料 -> 早期預警」', date: '2026-09-03', priority: 'P0', stream: 'Data', dod: '已完成官方會議紀錄簽核', status: '進行中' },
+            { id: 102, title: '訂定 Animal ID Schema (晶片、花色、生理特徵、入所日)', date: '2026-09-04', priority: 'P0', stream: 'Data', dod: 'Schema v1.0 文件已存檔至資料庫', status: '已完成' },
+            { id: 103, title: '完成 ESG Master Proposal 前 3 章 Draft (背景、痛點、政策)', date: '2026-09-05', priority: 'P1', stream: 'ESG', dod: '已完成 PDF 初稿', status: '已完成' },
+            { id: 104, title: '確定大溪美華里/瑞興里現地場勘計畫與狗腳印時間表', date: '2026-09-08', priority: 'P0', stream: 'Platform', dod: '雙方確定場勘日期', status: '已完成' },
+            { id: 105, title: '建置 10 家目標企業 ESG 窗口 Initial Contact 清單', date: '2026-09-10', priority: 'P1', stream: 'ESG', dod: '建立包含名字與信箱的 Excel', status: '已完成' },
+            { id: 106, title: '發布 9 月第一篇社群貼文：直擊收容所看不見的盲區', date: '2026-09-12', priority: 'P2', stream: 'Launch', dod: 'FB/IG 正式上線並獲得 >50 分享', status: '已完成' },
+            { id: 107, title: '完成收容所 24H 影像串流 RTSP 協定可行性測試', date: '2026-09-15', priority: 'P1', stream: 'Data', dod: '錄製 10 分鐘測試影片', status: '已完成' },
+
+            // Sprint 2 (09/17 - 09/30)
+            { id: 201, title: '完成 ESG Master Proposal 第 4-7 章 (方案、SROI、範疇三減碳)', date: '2026-09-18', priority: 'P0', stream: 'ESG', dod: 'SROI 試算模型建置完成', status: '未開始' },
+            { id: 202, title: '大溪現地實測拍照通報 Web App 雛形', date: '2026-09-20', priority: 'P1', stream: 'Platform', dod: '成功上傳 5 筆示範熱點', status: '未開始' },
+            { id: 203, title: '對接第一家獸醫顧問，簽署 Ground Truth 資料標註合作意向', date: '2026-09-24', priority: 'P0', stream: 'Data', dod: '取得 LOI 簽名檔', status: '未開始' },
+            { id: 204, title: '完成舊棉被回收碳減排計算邏輯說明書', date: '2026-09-28', priority: 'P2', stream: 'ESG', dod: '完成 2 頁 PDF 文件', status: '未開始' },
+
+            // Sprint 3 (10/01 - 10/14)
+            { id: 301, title: '發起 10 家目標企業 ESG 第一輪 Proposal 寄送', date: '2026-10-02', priority: 'P0', stream: 'ESG', dod: '全數信件寄出並追蹤開啟率', status: '未開始' },
+            { id: 302, title: '發表 10 月幕後社群系列：工程師裝機與 Animal ID 紀錄', date: '2026-10-06', priority: 'P2', stream: 'Launch', dod: '社群互動率提升 20%', status: '未開始' },
+            { id: 303, title: '完成 LiveCam 遠端串流與 AI 辨識邊緣運算模組整合', date: '2026-10-10', priority: 'P1', stream: 'Data', dod: '達成 80% 辨識率', status: '未開始' },
+
+            // Sprint 4 (10/15 - 10/31)
+            { id: 401, title: '安排 3 家企業 ESG 實體/線上簡報會議', date: '2026-10-18', priority: 'P0', stream: 'ESG', dod: '完成 3 場 Briefing', status: '未開始' },
+            { id: 402, title: '確定大溪在地伴手禮 (豆干/農產) 合作包裝樣品', date: '2026-10-25', priority: 'P1', stream: 'Launch', dod: '拿到實體伴手禮樣品', status: '未開始' },
+
+            // Sprint 5 (11/01 - 11/15)
+            { id: 501, title: '簽署第一家企業 ESG Pilot 驗證合約 (15-30萬)', date: '2026-11-05', priority: 'P0', stream: 'ESG', dod: '收到正式用印合約與訂金', status: '未開始' },
+            { id: 502, title: '完成 12 月 Launch Gate 10 大項目初審', date: '2026-11-12', priority: 'P1', stream: 'Launch', dod: '完成 Gate 試算報告', status: '未開始' },
+
+            // Sprint 6 (11/16 - 11/30)
+            { id: 601, title: '發布 11 月實證社群：企業舊物回收與大溪改變實況', date: '2026-11-18', priority: 'P2', stream: 'Launch', dod: '貼文累積 >1000 讚', status: '未開始' },
+            { id: 602, title: '發送 12/22 Launch 記者會媒體與嘉賓邀請函', date: '2026-11-25', priority: 'P0', stream: 'Launch', dod: '確定 >15 位貴賓出席', status: '未開始' },
+
+            // Sprint 7 & 8 (12/01 - 12/31)
+            { id: 701, title: '最終審核 Launch Gate (若不達標轉為 Data Initiative)', date: '2026-12-05', priority: 'P0', stream: 'Launch', dod: '確定最終發表型態', status: '未開始' },
+            { id: 702, title: '進行 12/22 記者會總彩排與伴手禮準備', date: '2026-12-18', priority: 'P1', stream: 'Launch', dod: '完成現場 Run-through', status: '未開始' },
+            { id: 703, title: '🎉 2026/12/22 正式舉行 Product & Strategy Launch', date: '2026-12-22', priority: 'P0', stream: 'Launch', dod: '記者會順利圓滿結束', status: '未開始' }
         ];
 
+        // Proposal Checklist 15章
+        const defaultProposalChecklist = [
+            "一、 專案摘要與經營團隊介紹", "二、 地方動保與大溪遊蕩犬治理痛點", "三、 農業部 115 年社區管理計畫對接",
+            "四、 GaiaBit 科技解決方案與 24H 影像", "五、 企業 ESG / CSR 合作效益說明", "六、 範疇三 (Scope 3) 員工低碳參與實踐",
+            "七、 SROI (社會投資報酬率) 量化預估", "八、 員工志工體驗與遠端互動設計", "九、 大溪人犬共好經濟圈與地方採購",
+            "十、 個資去識別化與隱私防護機制", "十一、 專案時程表與里程碑 (Roadmap)", "十二、 經費預算拆解與開立發票說明",
+            "十三、 合作意向書 (LOI) 與成功案例", "十四、 動物福利與獸醫師監督機制", "十五、 永續報告書 (ESG Report) 素材提供"
+        ];
+
+        // Launch Gate 10大門檻
+        const defaultLaunchGates = [
+            "1. 已簽署至少 1 家正式企業 ESG 合約或 LOI",
+            "2. 收容所影像串流穩定度達 99% (無斷訊)",
+            "3. Animal ID Schema 資料庫結構定案並運行",
+            "4. 取得至少 1 家合作獸醫師簽署 Ground Truth 診斷協議",
+            "5. 大溪通報 Web App 成功上線並運作 >30 天",
+            "6. 確定記者會場地與至少 10 家媒體出席",
+            "7. 大溪在地伴手禮實體樣品製作完成",
+            "8. 完成個資去識別化與隱私風險防護測試",
+            "9. 確定 SROI 與減碳試算報告定稿",
+            "10. 團隊核心人力專責分工完成無缺口"
+        ];
+
+        // 15 大 BUG 與風險
+        const defaultRisks = [
+            "1. ESG 活動公司化：誤將科技數據公司做成活動公關公司",
+            "2. 缺乏 Ground Truth：只有影片沒有獸醫診斷，數據價值為零",
+            "3. 資料代表性不足：單一收容所數據無法泛化至全球",
+            "4. 碳排過度宣稱：無認證卻硬宣稱碳權導致 Greenwashing 危機",
+            "5. 公益資料商業化倫理爭議：民眾質疑利用浪浪賺錢",
+            "6. 接送責任風險：接送民眾或動物發生交通事故的責任歸屬",
+            "7. 個資與隱私疑慮：攝影機拍到周邊居民住宅或路人",
+            "8. App 過度開發：花半年在寫 Native App，錯過網頁版驗證時機",
+            "9. Launch 過早：產品尚未成熟即舉辦大型發表會打臉自己",
+            "10. 團隊人力透支：少數人包辦巡查、寫程式、跑業務與辦活動",
+            "11. 協會合作破局：團體間利益或理念衝突導致場域抽離",
+            "12. 企業成效期許過高：企業要求直接轉換為 ESG 權威認證",
+            "13. 設備損壞與維護成本：戶外攝影機遭風吹雨打毀損",
+            "14. 法規政策轉變：動保法或社區治理政策急轉彎",
+            "15. 資金斷鏈風險：ESG 專案款項請款流程過長導致現金流緊縮"
+        ];
+
+        // 狀態載入
+        let tasks = JSON.parse(localStorage.getItem('gaiabit_tasks_v2')) || defaultTasks;
+        let proposalState = JSON.parse(localStorage.getItem('gaiabit_proposal_state')) || {};
+        let gateState = JSON.parse(localStorage.getItem('gaiabit_gate_state')) || {};
         let adminAccount = JSON.parse(localStorage.getItem('gaiabit_admin_account')) || null;
         let isLoggedIn = false;
         let calendarInstance = null;
 
-        // 2. 初始化
+        // 2. 初始化流程
         window.addEventListener('DOMContentLoaded', () => {
             initAuthUI();
-            renderTasks();
+            calculateLaunchCountdown();
+            renderWorkstreamProgress();
+            renderTodayFocus();
+            renderSprintRoadmap();
+            renderAllTasks();
+            renderProposalChecklist();
+            renderLaunchGate();
+            renderRisks();
             initCalendar();
         });
 
-        // 3. 切換頁籤
+        // 3. 倒數計時計算
+        function calculateLaunchCountdown() {
+            const launchDate = new Date('2026-12-22T09:00:00');
+            const now = new Date();
+            const diff = launchDate - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const el = document.getElementById('launch-countdown');
+            if (el) el.innerText = days > 0 ? `${days} 天` : '今日即是 Launch Day!';
+        }
+
+        // 4. 計算並渲染 4 大 Workstream 進度條
+        function renderWorkstreamProgress() {
+            const streams = ['Data', 'ESG', 'Platform', 'Launch'];
+            streams.forEach(s => {
+                const streamTasks = tasks.filter(t => t.stream === s);
+                const completed = streamTasks.filter(t => t.status === '已完成').length;
+                const pct = streamTasks.length > 0 ? Math.round((completed / streamTasks.length) * 100) : 0;
+                
+                const valEl = document.getElementById(`prog-${s.toLowerCase()}-val`);
+                const barEl = document.getElementById(`prog-${s.toLowerCase()}-bar`);
+                if (valEl) valEl.innerText = `${pct}%`;
+                if (barEl) barEl.style.width = `${pct}%`;
+            });
+        }
+
+        // 5. 渲染 🔥 Today Focus (今日焦點)
+        function renderTodayFocus() {
+            const container = document.getElementById('today-focus-container');
+            if (!container) return;
+
+            // 依據條件篩選：P0/P1 且 日期為 2026-09-03 至 2026-09-08
+            const todayFocusTasks = tasks.filter(t => (t.priority === 'P0' || t.priority === 'P1') && t.date <= '2026-09-08');
+
+            if (todayFocusTasks.length === 0) {
+                container.innerHTML = `<div class="p-6 text-center text-gray-400 text-xs">🎉 太棒了！今日無任何緊急 P0/P1 待辦事項。</div>`;
+                return;
+            }
+
+            container.innerHTML = todayFocusTasks.map(t => `
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-gray-900/90 rounded-xl border ${t.priority === 'P0' ? 'border-red-600/80' : 'border-amber-600/80'} shadow-md gap-3">
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-black px-2 py-0.5 rounded ${t.priority === 'P0' ? 'bg-red-900 text-red-200 border border-red-700' : 'bg-amber-900 text-amber-200 border border-amber-700'}">${t.priority}</span>
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-900/80 text-blue-300 border border-blue-800">${t.stream} Stream</span>
+                            <span class="font-bold text-white text-sm">${t.title}</span>
+                        </div>
+                        <p class="text-xs text-gray-400">驗收標準 (DoD)：<span class="text-gray-300">${t.dod}</span></p>
+                        <span class="text-xs text-gray-500 block">Deadline：${t.date}</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="toggleTaskStatus(${t.id})" class="text-xs px-3 py-1.5 rounded-lg font-bold border transition ${t.status === '已完成' ? 'bg-emerald-900/80 text-emerald-300 border-emerald-700' : 'bg-gray-800 text-gray-300 border-gray-700 hover:bg-gray-700'}">
+                            ${t.status === '已完成' ? '✓ 已完成' : '標記完成'}
+                        </button>
+                        ${isLoggedIn ? `<button onclick="deleteTask(${t.id})" class="text-xs bg-red-900/50 hover:bg-red-800 text-red-300 px-2.5 py-1.5 rounded-lg border border-red-800 transition">刪除</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 6. 渲染雙週 Sprint Roadmap
+        function renderSprintRoadmap() {
+            const container = document.getElementById('sprint-roadmap-container');
+            if (!container) return;
+
+            const sprints = [
+                { name: 'Sprint 1 (09/03 - 09/16)', goal: '終局定調、Animal ID 與 ESG 提案雛形', start: '2026-09-03', end: '2026-09-16' },
+                { name: 'Sprint 2 (09/17 - 09/30)', goal: 'ESG Master Proposal 定稿與獸醫合作洽談', start: '2026-09-17', end: '2026-09-30' },
+                { name: 'Sprint 3 (10/01 - 10/14)', goal: '第一輪 10 家企業 ESG 提案寄送與社群預熱', start: '2026-10-01', end: '2026-10-14' },
+                { name: 'Sprint 4 (10/15 - 10/31)', goal: '企業簡報會議與大溪伴手禮樣品確認', start: '2026-10-15', end: '2026-10-31' },
+                { name: 'Sprint 5 (11/01 - 11/15)', goal: '簽署首家企業 ESG 專案合約與 Launch 門檻初審', start: '2026-11-01', end: '2026-11-15' },
+                { name: 'Sprint 6 (11/16 - 11/30)', goal: '實證社群發布與記者會邀請函寄送', start: '2026-11-16', end: '2026-11-30' },
+                { name: 'Sprint 7 & 8 (12/01 - 12/31)', goal: 'Launch Gate 終審、總彩排與 12/22 發表會', start: '2026-12-01', end: '2026-12-31' }
+            ];
+
+            container.innerHTML = sprints.map(s => {
+                const sTasks = tasks.filter(t => t.date >= s.start && t.date <= s.end);
+                const completed = sTasks.filter(t => t.status === '已完成').length;
+                const pct = sTasks.length > 0 ? Math.round((completed / sTasks.length) * 100) : 0;
+
+                return `
+                    <div class="bg-cardBg p-5 rounded-2xl border border-gray-800 space-y-3">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-700 pb-2">
+                            <div>
+                                <h4 class="font-bold text-white text-sm">${s.name}</h4>
+                                <p class="text-xs text-emerald-400 mt-0.5">核心目標：${s.goal}</p>
+                            </div>
+                            <div class="text-xs text-gray-400 mt-2 md:mt-0">
+                                完成進度：<span class="text-emerald-400 font-bold">${completed} / ${sTasks.length} (${pct}%)</span>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            ${sTasks.map(t => `
+                                <div class="flex justify-between items-center text-xs p-2.5 bg-gray-900/60 rounded-lg border border-gray-800">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="font-bold px-1.5 py-0.5 rounded ${t.priority === 'P0' ? 'bg-red-900 text-red-200' : 'bg-amber-900 text-amber-200'}">${t.priority}</span>
+                                        <span class="text-gray-200">${t.title}</span>
+                                    </div>
+                                    <button onclick="toggleTaskStatus(${t.id})" class="px-2 py-1 rounded font-bold transition ${t.status === '已完成' ? 'bg-emerald-900/80 text-emerald-300' : 'bg-gray-800 text-gray-400 hover:text-white'}">
+                                        ${t.status}
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 7. 渲染全數 76 個實際任務
+        let currentStreamFilter = 'all';
+        function filterTasksByStream(stream) {
+            currentStreamFilter = stream;
+            renderAllTasks();
+        }
+
+        function renderAllTasks() {
+            const container = document.getElementById('all-tasks-container');
+            if (!container) return;
+
+            const filtered = currentStreamFilter === 'all' ? tasks : tasks.filter(t => t.stream === currentStreamFilter);
+
+            container.innerHTML = filtered.map(t => `
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-gray-900/80 rounded-xl border border-gray-800 hover:border-gray-700 transition gap-3">
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold px-2 py-0.5 rounded ${t.priority === 'P0' ? 'bg-red-900 text-red-200' : 'bg-amber-900 text-amber-200'}">${t.priority}</span>
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-900/80 text-blue-300">${t.stream} Stream</span>
+                            <span class="font-medium text-gray-200 text-sm">${t.title}</span>
+                        </div>
+                        <p class="text-xs text-gray-400">DoD：<span class="text-gray-300">${t.dod}</span></p>
+                        <span class="text-xs text-gray-500 block">Deadline：${t.date}</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="toggleTaskStatus(${t.id})" class="text-xs px-3 py-1.5 rounded-lg font-bold border transition ${t.status === '已完成' ? 'bg-emerald-900/80 text-emerald-300 border-emerald-700' : 'bg-gray-800 text-gray-300 border-gray-700 hover:bg-gray-700'}">
+                            ${t.status === '已完成' ? '✓ 已完成' : '標記完成'}
+                        </button>
+                        ${isLoggedIn ? `<button onclick="deleteTask(${t.id})" class="text-xs bg-red-900/50 hover:bg-red-800 text-red-300 px-2.5 py-1.5 rounded-lg border border-red-800 transition">刪除</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 8. 狀態切換與儲存
+        function toggleTaskStatus(id) {
+            tasks = tasks.map(t => {
+                if (t.id === id) {
+                    return { ...t, status: t.status === '已完成' ? '進行中' : '已完成' };
+                }
+                return t;
+            });
+            saveAndRefreshAll();
+        }
+
+        function deleteTask(id) {
+            if (!isLoggedIn) return;
+            if (!confirm('確定要刪除這項任務嗎？')) return;
+            tasks = tasks.filter(t => t.id !== id);
+            saveAndRefreshAll();
+        }
+
+        function saveAndRefreshAll() {
+            localStorage.setItem('gaiabit_tasks_v2', JSON.stringify(tasks));
+            renderWorkstreamProgress();
+            renderTodayFocus();
+            renderSprintRoadmap();
+            renderAllTasks();
+            updateCalendarEvents();
+        }
+
+        // 9. 渲染 ESG Master Proposal Checklist (15章)
+        function renderProposalChecklist() {
+            const container = document.getElementById('proposal-checklist-container');
+            const badge = document.getElementById('proposal-completion-badge');
+            if (!container) return;
+
+            let completedCount = 0;
+            container.innerHTML = defaultProposalChecklist.map((item, idx) => {
+                const checked = proposalState[idx] || false;
+                if (checked) completedCount++;
+                return `
+                    <label class="flex items-start space-x-3 p-3 bg-gray-900/80 rounded-xl border border-gray-800 cursor-pointer hover:border-gray-700 transition">
+                        <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleProposalItem(${idx})" class="mt-0.5 rounded border-gray-700 bg-gray-800 text-blue-600 focus:ring-0">
+                        <span class="text-xs ${checked ? 'line-through text-gray-500' : 'text-gray-200'} font-medium">${item}</span>
+                    </label>
+                `;
+            }).join('');
+
+            if (badge) badge.innerText = `進度 ${completedCount} / 15`;
+        }
+
+        function toggleProposalItem(idx) {
+            proposalState[idx] = !proposalState[idx];
+            localStorage.setItem('gaiabit_proposal_state', JSON.stringify(proposalState));
+            renderProposalChecklist();
+        }
+
+        // 10. 渲染 Launch Gate (10大門檻)
+        function renderLaunchGate() {
+            const container = document.getElementById('launch-gate-container');
+            const badge = document.getElementById('gate-pass-badge');
+            if (!container) return;
+
+            let passedCount = 0;
+            container.innerHTML = defaultLaunchGates.map((gate, idx) => {
+                const passed = gateState[idx] || false;
+                if (passed) passedCount++;
+                return `
+                    <label class="flex items-center justify-between p-3.5 bg-gray-900/80 rounded-xl border border-gray-800 cursor-pointer hover:border-gray-700 transition">
+                        <div class="flex items-center space-x-3">
+                            <input type="checkbox" ${passed ? 'checked' : ''} onchange="toggleGateItem(${idx})" class="rounded border-gray-700 bg-gray-800 text-emerald-500 focus:ring-0">
+                            <span class="text-xs ${passed ? 'text-emerald-400 font-bold' : 'text-gray-300'}">${gate}</span>
+                        </div>
+                        <span class="text-xs font-bold px-2 py-0.5 rounded ${passed ? 'bg-emerald-900/80 text-emerald-300' : 'bg-gray-800 text-gray-500'}">
+                            ${passed ? '✓ 通過' : '未達標'}
+                        </span>
+                    </label>
+                `;
+            }).join('');
+
+            if (badge) {
+                badge.innerText = `通過 ${passedCount} / 10`;
+                badge.className = passedCount >= 8 ? 'text-xs bg-emerald-900 text-emerald-300 px-3 py-1 rounded font-bold' : 'text-xs bg-amber-900 text-amber-300 px-3 py-1 rounded font-bold';
+            }
+        }
+
+        function toggleGateItem(idx) {
+            gateState[idx] = !gateState[idx];
+            localStorage.setItem('gaiabit_gate_state', JSON.stringify(gateState));
+            renderLaunchGate();
+        }
+
+        // 11. 渲染 15 大 BUG 與風險
+        function renderRisks() {
+            const container = document.getElementById('risk-list-container');
+            if (!container) return;
+
+            container.innerHTML = defaultRisks.map(r => `
+                <div class="p-4 bg-gray-900/80 rounded-xl border border-gray-800 space-y-1">
+                    <p class="text-xs font-bold text-amber-400">${r.split('：')[0]}</p>
+                    <p class="text-xs text-gray-300 leading-relaxed">${r.split('：')[1] || ''}</p>
+                </div>
+            `).join('');
+        }
+
+        // 12. Idea Gate 評估邏輯
+        function evaluateIdea(e) {
+            e.preventDefault();
+            const name = document.getElementById('idea-name').value;
+            const q1 = document.getElementById('q1').checked;
+            const q2 = document.getElementById('q2').checked;
+            const q3 = document.getElementById('q3').checked;
+            const q4 = document.getElementById('q4').checked;
+
+            const resEl = document.getElementById('idea-result');
+            resEl.classList.remove('hidden');
+
+            if (q1 || q2 || q3 || q4) {
+                resEl.className = "p-4 rounded-xl text-xs font-bold bg-emerald-950/80 border border-emerald-700 text-emerald-300 space-y-1";
+                resEl.innerHTML = `<div>✅ 判決：通過 Idea Gate！</div><div>【${name}】符合當前戰略價值，允許排入近期 Sprint Backlog。</div>`;
+            } else {
+                resEl.className = "p-4 rounded-xl text-xs font-bold bg-red-950/80 border border-red-700 text-red-300 space-y-1";
+                resEl.innerHTML = `<div>🛑 判決：未通過 Idea Gate。</div><div>【${name}】無法為當前四核心指標加分，請先放到 Future Backlog，切勿打亂當前 Sprint！</div>`;
+            }
+        }
+
+        // 13. 行事曆套件初始化
+        function initCalendar() {
+            const calendarEl = document.getElementById('calendar-el');
+            calendarInstance = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'zh-tw',
+                initialDate: '2026-09-03',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek'
+                },
+                events: tasks.map(t => ({
+                    id: String(t.id),
+                    title: `[${t.priority}] ${t.title}`,
+                    start: t.date,
+                    color: t.priority === 'P0' ? '#EF4444' : (t.priority === 'P1' ? '#F59E0B' : '#2563EB')
+                }))
+            });
+            calendarInstance.render();
+        }
+
+        function updateCalendarEvents() {
+            if (!calendarInstance) return;
+            calendarInstance.removeAllEvents();
+            tasks.forEach(t => {
+                calendarInstance.addEvent({
+                    id: String(t.id),
+                    title: `[${t.priority}] ${t.title}`,
+                    start: t.date,
+                    color: t.priority === 'P0' ? '#EF4444' : (t.priority === 'P1' ? '#F59E0B' : '#2563EB')
+                });
+            });
+        }
+
+        // 14. 頁籤切換控制
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.sidebar-btn').forEach(btn => {
@@ -313,129 +901,93 @@
             }
         }
 
-        // 4. 行事曆初始化
-        function initCalendar() {
-            const calendarEl = document.getElementById('calendar-el');
-            calendarInstance = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'zh-tw',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek'
-                },
-                events: tasks.map(t => ({
-                    id: String(t.id),
-                    title: t.title,
-                    start: t.date,
-                    color: t.category === 'today' ? '#2563EB' : '#00D4B2'
-                }))
-            });
-            calendarInstance.render();
-        }
-
-        function updateCalendarEvents() {
-            if (!calendarInstance) return;
-            calendarInstance.removeAllEvents();
-            tasks.forEach(t => {
-                calendarInstance.addEvent({
-                    id: String(t.id),
-                    title: t.title,
-                    start: t.date,
-                    color: t.category === 'today' ? '#2563EB' : '#00D4B2'
-                });
-            });
-        }
-
-        // 5. 渲染工作任務
-        function renderTasks() {
-            localStorage.setItem('gaiabit_tasks', JSON.stringify(tasks));
-            updateCalendarEvents();
-
-            const renderContainer = (containerId, filterCategory = null) => {
-                const el = document.getElementById(containerId);
-                if (!el) return;
-
-                const filtered = filterCategory ? tasks.filter(t => t.category === filterCategory) : tasks;
-
-                if (filtered.length === 0) {
-                    el.innerHTML = `<p class="text-xs text-gray-500 py-4 text-center">尚無任何工作排程。</p>`;
-                    return;
-                }
-
-                el.innerHTML = filtered.map(t => `
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-gray-900/80 rounded-lg border border-gray-800 hover:border-gray-700 transition gap-2">
-                        <div class="space-y-1">
-                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-800">${getCategoryLabel(t.category)}</span>
-                            <span class="font-medium text-gray-200 text-sm ml-2">${t.title}</span>
-                            <span class="text-xs text-gray-500 block">預定完成日期：${t.date}</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs px-2.5 py-1 rounded bg-amber-900/50 text-amber-300 border border-amber-800 font-bold">${t.status}</span>
-                            ${isLoggedIn ? `<button onclick="deleteTask(${t.id})" class="text-xs bg-red-900/50 hover:bg-red-800 text-red-300 px-2.5 py-1 rounded border border-red-800 transition">刪除</button>` : ''}
-                        </div>
-                    </div>
-                `).join('');
-            };
-
-            renderContainer('today-tasks-container', 'today');
-            renderContainer('roadmap-tasks-container', 'roadmap');
-            renderContainer('tasks-all-container');
-            renderContainer('temp-tasks-container', 'temp');
-        }
-
-        function getCategoryLabel(cat) {
-            const map = { today: '今日總覽', roadmap: '雙週Roadmap', tasks: '任務中心', esg: 'Animal ESG', data: 'Animal Data', launch: '12月Launch', temp: '臨時事項' };
-            return map[cat] || '一般工作';
-        }
-
-        // 6. 新增任務 (管理者專用)
+        // 15. 後台管理者新增工作
         function handleCreateTask(e) {
             e.preventDefault();
             if (!isLoggedIn) {
-                alert('權限受限：只有管理者可新增工作！');
+                alert('權限受限：您必須登入管理者帳號才能新增工作！');
                 return;
             }
 
             const title = document.getElementById('task-title').value;
             const date = document.getElementById('task-date').value;
-            const category = document.getElementById('task-category').value;
+            const priority = document.getElementById('task-priority').value;
+            const stream = document.getElementById('task-stream').value;
+            const dod = document.getElementById('task-dod').value;
 
             const newTask = {
                 id: Date.now(),
                 title,
                 date,
-                category,
+                priority,
+                stream,
+                dod,
                 status: '進行中'
             };
 
             tasks.push(newTask);
-            renderTasks();
-            alert('成功新增工作並同步至行事曆！');
+            saveAndRefreshAll();
+            alert('新任務已成功新增，並自動同步至行事曆！');
             document.getElementById('task-title').value = '';
+            document.getElementById('task-dod').value = '';
         }
 
-        function deleteTask(id) {
-            if (!isLoggedIn) return;
-            if (!confirm('確定要刪除這項工作嗎？')) return;
-            tasks = tasks.filter(t => t.id !== id);
-            renderTasks();
+        // 16. JSON 匯出與匯入功能
+        function exportDataJSON() {
+            const data = {
+                tasks,
+                proposalState,
+                gateState,
+                adminAccount,
+                exportAt: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `gaiabit_pm_backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
         }
 
-        // 7. 帳號權限與 Modal 控制
+        function importDataJSON(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const imported = JSON.parse(evt.target.result);
+                    if (imported.tasks) tasks = imported.tasks;
+                    if (imported.proposalState) proposalState = imported.proposalState;
+                    if (imported.gateState) gateState = imported.gateState;
+                    if (imported.adminAccount) adminAccount = imported.adminAccount;
+
+                    saveAndRefreshAll();
+                    renderProposalChecklist();
+                    renderLaunchGate();
+                    initAuthUI();
+                    alert('專案進度 JSON 已成功匯入並備份！');
+                } catch (err) {
+                    alert('匯入失敗：檔案格式不正確！');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // 17. 帳號驗證與 Auth Modal
         function initAuthUI() {
             const modalTitle = document.getElementById('modal-title');
             const modalDesc = document.getElementById('modal-desc');
             const submitBtn = document.getElementById('modal-submit-btn');
 
             if (!adminAccount) {
-                modalTitle.innerText = "首次使用：設定管理者帳號密碼";
-                modalDesc.innerText = "系統首次啟動！請設定您專屬的管理者帳號密碼。設定後只有您登入才能新增與刪除工作，其他人只能瀏覽。";
+                modalTitle.innerText = "首次啟動：設定管理者帳密";
+                modalDesc.innerText = "請設定您專屬的管理者帳號與密碼。設定完成後，只有您登入才能新增/修改/刪除工作，其他人僅能瀏覽。";
                 submitBtn.innerText = "儲存管理者帳密";
             } else {
                 modalTitle.innerText = "管理者登入";
-                modalDesc.innerText = "請輸入先前設定的管理者帳號密碼，登入後解鎖工作編輯與管理權限。";
-                submitBtn.innerText = "登入管理者";
+                modalDesc.innerText = "請輸入您先前設定的管理者帳號密碼，登入後解鎖後台新增與編輯權限。";
+                submitBtn.innerText = "驗證登入";
             }
         }
 
@@ -449,16 +1001,14 @@
             const pass = document.getElementById('auth-pass').value.trim();
 
             if (!adminAccount) {
-                // 首次註冊/設定帳號密碼
                 adminAccount = { user, pass };
                 localStorage.setItem('gaiabit_admin_account', JSON.stringify(adminAccount));
                 isLoggedIn = true;
-                alert("管理者帳號密碼設定完成！您已解鎖編輯權限。");
+                alert("管理者帳密設定成功！已為您登入並解鎖後台編輯權限。");
             } else {
-                // 驗證登入
                 if (user === adminAccount.user && pass === adminAccount.pass) {
                     isLoggedIn = true;
-                    alert("驗證成功！歡迎回來，管理者。");
+                    alert("登入成功！歡迎回來，管理者。");
                 } else {
                     alert("帳號或密碼錯誤，請重新輸入！");
                     return;
@@ -467,7 +1017,8 @@
 
             updateUserStatusUI();
             toggleAuthModal();
-            renderTasks();
+            renderTodayFocus();
+            renderAllTasks();
         }
 
         function updateUserStatusUI() {
@@ -475,29 +1026,33 @@
             const nameText = document.getElementById('user-name-text');
             const authBtn = document.getElementById('auth-btn');
             const adminPanel = document.getElementById('admin-add-task-panel');
+            const adminBadge = document.getElementById('admin-badge');
 
             if (isLoggedIn) {
-                roleText.innerText = "身份：管理者 (可編輯)";
+                roleText.innerText = "目前身分：管理者";
                 nameText.innerText = adminAccount.user;
                 authBtn.innerText = "登出";
                 authBtn.onclick = handleLogout;
                 authBtn.className = "bg-red-600 text-white text-xs px-3 py-1.5 rounded hover:bg-red-500 font-bold transition";
-                adminPanel.classList.remove('hidden');
+                if (adminPanel) adminPanel.classList.remove('hidden');
+                if (adminBadge) adminBadge.classList.remove('hidden');
             } else {
                 roleText.innerText = "目前身分：唯讀訪客";
                 nameText.innerText = "只能瀏覽內容";
-                authBtn.innerText = "設定/登入";
+                authBtn.innerText = "登入 / 註冊";
                 authBtn.onclick = toggleAuthModal;
                 authBtn.className = "bg-blue-600 text-white text-xs px-3 py-1.5 rounded hover:bg-blue-500 font-bold transition";
-                adminPanel.classList.add('hidden');
+                if (adminPanel) adminPanel.classList.add('hidden');
+                if (adminBadge) adminBadge.classList.add('hidden');
             }
         }
 
         function handleLogout() {
             isLoggedIn = false;
             updateUserStatusUI();
-            renderTasks();
-            alert("已成功登出，切換為唯讀訪客模式。");
+            renderTodayFocus();
+            renderAllTasks();
+            alert("已登出管理員身分，切換為唯讀訪客模式。");
         }
     </script>
 </body>
