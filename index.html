@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GaiaBit 毛焦點 | 專業專案與行程管理儀表板</title>
+    <title>GaiaBit 毛焦點 | 專業專案管理與戰略儀表板</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -22,50 +22,61 @@
 </head>
 <body class="bg-ntueLight text-gray-800 font-sans antialiased min-h-screen flex flex-col justify-between">
     <!-- 頂部導覽列 -->
-    <header class="bg-ntueBlue text-white shadow-md sticky top-0 z-50">
+    <header class="bg-ntueBlue text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
-            <div class="flex items-center space-x-3 mb-2 md:mb-0">
-                <span class="text-2xl font-bold tracking-wider">GaiaBit <span class="text-ntueAccent">毛焦點</span></span>
-                <span class="text-xs bg-blue-900 px-2 py-1 rounded text-blue-200">專業戰略與行程管家</span>
+            <div class="flex items-center space-x-3 mb-3 md:mb-0">
+                <span class="text-2xl font-extrabold tracking-wider">GaiaBit <span class="text-ntueAccent">毛焦點</span></span>
+                <span class="text-xs bg-blue-900 px-2.5 py-1 rounded-full text-blue-200 font-medium border border-blue-800">專業戰略與行程管理系統</span>
             </div>
             <!-- 頁籤導覽 -->
-            <nav class="flex space-x-6 font-medium text-sm">
+            <nav class="flex space-x-4 md:space-x-6 font-medium text-sm">
                 <button onclick="switchTab('strategy')" id="btn-strategy" class="nav-btn text-ntueAccent border-b-2 border-ntueAccent pb-1 transition">宏觀戰略總覽</button>
-                <button onclick="switchTab('schedule')" id="btn-schedule" class="nav-btn hover:text-ntueAccent pb-1 transition">每日排程與衝刺看板</button>
-                <button onclick="switchTab('proposal')" id="btn-proposal" class="nav-btn hover:text-ntueAccent pb-1 transition">專業企劃與資產庫</button>
+                <button onclick="switchTab('schedule')" id="btn-schedule" class="nav-btn hover:text-ntueAccent pb-1 transition">每日排程與衝刺</button>
+                <button onclick="switchTab('proposal')" id="btn-proposal" class="nav-btn hover:text-ntueAccent pb-1 transition">專業企劃與資產</button>
+                <button onclick="switchTab('press')" id="btn-press" class="nav-btn hover:text-ntueAccent pb-1 transition">12月底記者會沙盤</button>
             </nav>
-            <div class="mt-2 md:mt-0">
-                <button onclick="openLoginModal()" id="auth-btn" class="bg-ntueAccent text-ntueBlue px-4 py-1.5 rounded font-bold text-xs hover:bg-emerald-400 transition">管理者登入</button>
+            <div class="mt-3 md:mt-0 flex items-center space-x-3" id="auth-container">
+                <span id="user-role-badge" class="text-xs bg-gray-800 text-gray-300 px-2.5 py-1 rounded font-medium">訪客模式（唯讀）</span>
+                <button onclick="openLoginModal()" id="auth-btn" class="bg-ntueAccent text-ntueBlue px-4 py-1.5 rounded-md font-bold text-xs hover:bg-emerald-400 transition shadow-sm">管理者登入</button>
             </div>
         </div>
     </header>
 
     <!-- 主要內容區 -->
-    <main class="max-w-7xl mx-auto px-6 py-10 flex-grow w-full">
+    <main class="max-w-7xl mx-auto px-6 py-10 flex-grow w-full space-y-10">
         
+        <!-- Supabase 未設定提示橫幅（若尚未填入金鑰時顯示） -->
+        <div id="config-warning" class="hidden bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm">
+            <div class="flex items-center">
+                <div class="flex-shrink-0 text-amber-500 font-bold text-lg">⚠️</div>
+                <div class="ml-3">
+                    <p class="text-sm font-bold text-amber-800">尚未連線至 Supabase 資料庫</p>
+                    <p class="text-xs text-amber-700 mt-0.5">目前為本地展示模式。若要啟用「登入後僅管理者可新增/修改/刪除」功能，請修改程式碼中的 <code class="bg-amber-100 px-1 rounded">SUPABASE_URL</code> 與 <code class="bg-amber-100 px-1 rounded">SUPABASE_ANON_KEY</code>。</p>
+                </div>
+            </div>
+        </div>
+
         <!-- ================= 標籤一：宏觀戰略總覽 ================= -->
         <div id="tab-strategy" class="space-y-12">
-            <!-- Banner -->
-            <div class="bg-gradient-to-r from-ntueBlue to-blue-900 text-white p-10 rounded-2xl shadow-sm text-center">
-                <h1 class="text-3xl md:text-4xl font-extrabold mb-3">用科技串起人、動物與地方，讓問題成為更好的未來</h1>
+            <div class="bg-gradient-to-r from-ntueBlue to-blue-900 text-white p-10 rounded-2xl shadow-md text-center space-y-4">
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">用科技串起人、動物與地方，讓問題成為更好的未來</h1>
                 <p class="text-blue-200 max-w-3xl mx-auto text-sm md:text-base leading-relaxed">
                     結合地方治理、企業 ESG 價值與全球極度稀缺之收容所「群體行為數據」，打造永續動保生態系，最終進軍百億美金 AI 寵物醫療預警市場。
                 </p>
             </div>
 
-            <!-- 三大核心支柱 -->
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-ntueBlue">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-ntueBlue hover:shadow-md transition">
                     <span class="text-2xl font-bold text-ntueAccent">01</span>
                     <h3 class="text-lg font-bold text-ntueBlue mt-2 mb-2">企業 ESG 專案對接</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">對接企業 ESG 預算，結合員工參與（遠端觀看、舊棉被碳減排回收），輸出 SROI 量化成果，建立穩定現金流。</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-ntueAccent">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-ntueAccent hover:shadow-md transition">
                     <span class="text-2xl font-bold text-ntueAccent">02</span>
                     <h3 class="text-lg font-bold text-ntueBlue mt-2 mb-2">12月底公開記者會</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">以大溪示範場域為核心，串聯在地豆干、農產與文創伴手禮，透過心理學社群行銷，打造年度地方共好發表大秀。</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-blue-500">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-blue-500 hover:shadow-md transition">
                     <span class="text-2xl font-bold text-ntueAccent">03</span>
                     <h3 class="text-lg font-bold text-ntueBlue mt-2 mb-2">全球稀缺 AI 醫療大數據</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">24 小時連續記錄收容所多犬貓群體互動行為，建立全球罕見訓練集，開發 AI 寵物疾病早期預警系統。</p>
@@ -73,51 +84,54 @@
             </div>
         </div>
 
-        <!-- ================= 標籤二：每日排程與雙週衝刺 ================= -->
+        <!-- ================= 標籤二：每日排程與雙週衝刺 (嚴格權限控管) ================= -->
         <div id="tab-schedule" class="hidden space-y-8">
             <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col md:flex-row justify-between items-center">
                 <div>
-                    <h2 class="text-2xl font-bold text-ntueBlue">📅 每日工作排程與 12 月底記者會衝刺看板</h2>
-                    <p class="text-gray-600 text-sm mt-1">即時掌握每兩週關鍵任務，管理者登入後可自由新增、修改與管理每日待辦。</p>
+                    <h2 class="text-2xl font-bold text-ntueBlue">📅 每日工作排程與雙週衝刺看板</h2>
+                    <p class="text-gray-600 text-sm mt-1">即時掌握每兩週關鍵任務。<strong>登入管理者帳號後解鎖新增與刪除權限</strong>，其他人僅能瀏覽。</p>
                 </div>
                 <div class="mt-4 md:mt-0 bg-blue-50 border border-blue-200 px-4 py-3 rounded-lg text-center">
-                    <span class="text-xs text-blue-600 font-bold block">距離 12 月底公開記者會還有</span>
+                    <span class="text-xs text-blue-600 font-bold block">距離 12 月底記者會還有</span>
                     <span id="countdown-days" class="text-xl font-extrabold text-ntueBlue">計算中...</span>
                 </div>
             </div>
 
-            <!-- 管理者新增任務面板（預設隱藏） -->
+            <!-- 管理者專用新增面板（預設隱藏，唯有登入管理者才顯示） -->
             <div id="admin-panel" class="hidden bg-white p-6 rounded-xl shadow-md border-2 border-ntueAccent space-y-4">
-                <h3 class="text-md font-bold text-ntueBlue">⚙️ [管理者模式] 新增專案排程任務</h3>
+                <div class="flex justify-between items-center">
+                    <h3 class="text-md font-bold text-ntueBlue">⚙️ [管理者專用] 新增專案排程任務</h3>
+                    <span class="text-xs text-emerald-600 font-bold bg-emerald-50 px-2 py-1 rounded">權限已驗證：可寫入資料庫</span>
+                </div>
                 <form id="task-form" onsubmit="handleAddTask(event)" class="grid md:grid-cols-4 gap-3">
-                    <input type="text" id="task-title" placeholder="任務名稱 (例: 拜訪大溪在地豆干業者洽談ESG)" required class="border p-2 rounded text-sm md:col-span-2">
-                    <input type="date" id="task-date" required class="border p-2 rounded text-sm">
-                    <select id="task-category" class="border p-2 rounded text-sm">
+                    <input type="text" id="task-title" placeholder="任務名稱 (例: 拜訪大溪在地豆干業者洽談ESG)" required class="border p-2.5 rounded text-sm md:col-span-2 focus:ring-2 focus:ring-ntueAccent outline-none">
+                    <input type="date" id="task-date" required class="border p-2.5 rounded text-sm focus:ring-2 focus:ring-ntueAccent outline-none">
+                    <select id="task-category" class="border p-2.5 rounded text-sm focus:ring-2 focus:ring-ntueAccent outline-none">
                         <option value="ESG專案">ESG 專案開發</option>
                         <option value="記者會籌備">記者會與場地</option>
                         <option value="社群行銷">社群與心理學行銷</option>
                         <option value="技術與APP">技術與 APP/AI</option>
                     </select>
-                    <button type="submit" class="md:col-span-4 bg-ntueBlue text-white py-2 rounded text-sm font-bold hover:bg-blue-900 transition">確認新增任務</button>
+                    <button type="submit" class="md:col-span-4 bg-ntueBlue text-white py-2.5 rounded text-sm font-bold hover:bg-blue-900 transition shadow-sm">確認新增任務至 Supabase</button>
                 </form>
             </div>
 
-            <!-- 任務清單 -->
+            <!-- 任務列表 -->
             <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
                 <div class="flex justify-between items-center">
                     <h3 class="text-lg font-bold text-ntueBlue">當前雙週衝刺任務列表</h3>
-                    <span id="role-badge" class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded">目前權限：一般瀏覽者</span>
+                    <span id="task-count-badge" class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded font-medium">載入中...</span>
                 </div>
                 <div id="task-list" class="space-y-3">
-                    <p class="text-gray-500 text-sm text-center py-6">正在載入任務資料...</p>
+                    <p class="text-gray-500 text-sm text-center py-6">正在從資料庫同步任務資料...</p>
                 </div>
             </div>
         </div>
 
         <!-- ================= 標籤三：專業企劃與資產庫 ================= -->
         <div id="tab-proposal" class="hidden space-y-8">
-            <div class="bg-white p-8 rounded-xl shadow-sm">
-                <h2 class="text-2xl font-bold text-ntueBlue mb-2">📂 專業企劃書與核心資產庫</h2>
+            <div class="bg-white p-8 rounded-xl shadow-sm space-y-2">
+                <h2 class="text-2xl font-bold text-ntueBlue">📂 專業企劃書與核心資產庫</h2>
                 <p class="text-gray-600 text-sm">符合政府及大企業 ESG 審查標準的標準化架構，確保對外簡報高度專業、無懈可擊。</p>
             </div>
             <div class="grid md:grid-cols-2 gap-8">
@@ -140,70 +154,134 @@
                 </div>
             </div>
         </div>
+
+        <!-- ================= 標籤四：12月底記者會沙盤 ================= -->
+        <div id="tab-press" class="hidden space-y-8">
+            <div class="bg-white p-8 rounded-xl shadow-sm space-y-4">
+                <h2 class="text-2xl font-bold text-ntueBlue">🎯 12月底公開記者會與社群策略沙盤</h2>
+                <p class="text-gray-600 text-sm">結合現代心理學與成長駭客策略，打造具備強大期待感的宣傳節奏與伴手禮經濟。</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-2">
+                    <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded">階段一 (10月)</span>
+                    <h4 class="font-bold text-ntueBlue">痛點共鳴與預熱</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">透過大溪美華里遊蕩犬議題切入，運用心理學「損失趨勢」與「參與感」貼文，募集首批志工與關注者。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-2">
+                    <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2 py-1 rounded">階段二 (11月)</span>
+                    <h4 class="font-bold text-ntueBlue">企業招募與伴手禮發表</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">發布企業 ESG 合作方案，結合大溪在地綠竹筍、豆干與文創伴手禮（伴手禮概念），吸引第一波 ESG 企業預約。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-2">
+                    <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2 py-1 rounded">階段三 (12月)</span>
+                    <h4 class="font-bold text-ntueBlue">記者會引爆與成果宣告</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">舉辦正式公開記者會暨企業聯合宣言，發表大溪人犬共好經濟圈成果與 AI 數據藍圖。</p>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <!-- 登入 Modal -->
-    <div id="login-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white p-8 rounded-xl w-96 shadow-xl space-y-4">
-            <h3 class="text-lg font-bold text-ntueBlue">管理者身分驗證</h3>
+    <!-- 管理者登入 Modal -->
+    <div id="login-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white p-8 rounded-xl w-full max-w-md shadow-xl space-y-4 relative">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold text-ntueBlue">管理者安全登入 (Supabase Auth)</h3>
+                <button onclick="closeLoginModal()" class="text-gray-400 hover:text-gray-600 font-bold">✕</button>
+            </div>
+            <p class="text-xs text-gray-500">輸入您的 Supabase 管理者帳號密碼。登入成功後將立即解鎖新增與刪除權限。</p>
             <form onsubmit="handleLogin(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">管理員信箱</label>
-                    <input type="email" id="admin-email" required class="w-full border p-2 rounded text-sm">
+                    <label class="block text-xs font-bold text-gray-600 mb-1">管理員 Email</label>
+                    <input type="email" id="admin-email" placeholder="admin@gaiabit.com" required class="w-full border p-2.5 rounded text-sm focus:ring-2 focus:ring-ntueAccent outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-600 mb-1">密碼</label>
-                    <input type="password" id="admin-password" required class="w-full border p-2 rounded text-sm">
+                    <input type="password" id="admin-password" placeholder="••••••••" required class="w-full border p-2.5 rounded text-sm focus:ring-2 focus:ring-ntueAccent outline-none">
                 </div>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeLoginModal()" class="px-4 py-2 border rounded text-xs">取消</button>
-                    <button type="submit" class="bg-ntueBlue text-white px-4 py-2 rounded text-xs font-bold">登入</button>
+                <div class="flex justify-end space-x-2 pt-3">
+                    <button type="button" onclick="closeLoginModal()" class="px-4 py-2 border rounded text-xs text-gray-600 hover:bg-gray-50">取消</button>
+                    <button type="submit" class="bg-ntueBlue text-white px-5 py-2 rounded text-xs font-bold hover:bg-blue-900 transition">安全登入</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- 頁尾 -->
-    <footer class="bg-ntueBlue text-white py-6 mt-16 text-center text-xs text-blue-300">
-        <p>&copy; 2026 GaiaBit 毛焦點科技股份有限公司. All Rights Reserved. 打造最具社會影響力的 AI 寵物生態系。</p>
+    <footer class="bg-ntueBlue text-white py-6 mt-16 text-center text-xs text-blue-300 border-t border-blue-900">
+        <div class="max-w-7xl mx-auto px-6 space-y-2">
+            <p>&copy; 2026 GaiaBit 毛焦點科技股份有限公司. All Rights Reserved. 打造最具社會影響力的 AI 寵物生態系。</p>
+            <p class="text-blue-400">GitHub + Vercel 自動部署 | Supabase 資料庫與嚴格權限控管</p>
+        </div>
     </footer>
 
-    <!-- 網頁互動與 Supabase 邏輯 -->
+    <!-- 前端核心與 Supabase 邏輯 -->
     <script>
-        // 切換分頁
-        function switchTab(tabId) {
-            ['strategy', 'schedule', 'proposal'].forEach(t => {
-                document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`btn-${t}`).classList.remove('text-ntueAccent', 'border-b-2', 'border-ntueAccent');
-                document.getElementById(`btn-${t}`).classList.add('hover:text-ntueAccent');
-            });
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            document.getElementById(`btn-${tabId}`).classList.add('text-ntueAccent', 'border-b-2', 'border-ntueAccent');
-            document.getElementById(`btn-${tabId}`).classList.remove('hover:text-ntueAccent');
+        // ---------------------------------------------------------
+        // 1. Supabase 設定與連線初始化
+        // ---------------------------------------------------------
+        // 請將以下填入您在 Supabase 取得的 URL 與 Anon Key
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+        
+        let supabaseClient = null;
+        let isAdminLoggedIn = false;
+
+        try {
+            if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                document.getElementById('config-warning').classList.add('hidden');
+                checkAuthSession();
+            } else {
+                document.getElementById('config-warning').classList.remove('hidden');
+            }
+        } catch (e) {
+            console.warn('Supabase 初始化失敗，使用本地預設展示模式。');
+            document.getElementById('config-warning').classList.remove('hidden');
         }
 
-        // 倒數計時
+        // ---------------------------------------------------------
+        // 2. 分頁切換邏輯
+        // ---------------------------------------------------------
+        function switchTab(tabId) {
+            ['strategy', 'schedule', 'proposal', 'press'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`btn-${t}`);
+                if (el) el.classList.add('hidden');
+                if (btn) {
+                    btn.classList.remove('text-ntueAccent', 'border-b-2', 'border-ntueAccent');
+                    btn.classList.add('hover:text-ntueAccent');
+                }
+            });
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            const targetBtn = document.getElementById(`btn-${tabId}`);
+            if (targetTab) targetTab.classList.remove('hidden');
+            if (targetBtn) {
+                targetBtn.classList.add('text-ntueAccent', 'border-b-2', 'border-ntueAccent');
+                targetBtn.classList.remove('hover:text-ntueAccent');
+            }
+        }
+
+        // ---------------------------------------------------------
+        // 3. 倒數計時器
+        // ---------------------------------------------------------
         function updateCountdown() {
             const target = new Date('2026-12-31T23:59:59');
             const diff = target - new Date();
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('countdown-days').innerText = days > 0 ? `${days} 天` : '已達指定日期';
+            const el = document.getElementById('countdown-days');
+            if (el) el.innerText = days > 0 ? `${days} 天` : '已達指定日期';
         }
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Supabase 設定（請填入你的 Supabase 專案資訊）
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-        let supabaseClient = null;
-        try {
-            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        } catch (e) {
-            console.log('使用本地預設排程');
-        }
-
+        // ---------------------------------------------------------
+        // 4. 任務載入與渲染 (整合 Supabase 讀取)
+        // ---------------------------------------------------------
         async function loadTasks() {
             const listEl = document.getElementById('task-list');
+            const countBadge = document.getElementById('task-count-badge');
+            
+            // 預設演示資料
             let tasks = [
                 { id: 1, title: '完成專業企劃書撰寫（目的、作法、結果、效益與實質受益人）', date: '2026-10-25', category: 'ESG專案', status: '進行中' },
                 { id: 2, title: '建立 10 家目標企業 ESG 窗口名單與聯繫策略', date: '2026-11-05', category: 'ESG專案', status: '未開始' },
@@ -214,54 +292,168 @@
 
             if (supabaseClient) {
                 try {
-                    const { data } = await supabaseClient.from('schedules').select('*');
-                    if (data && data.length > 0) tasks = data;
-                } catch (err) {}
+                    const { data, error } = await supabaseClient.from('schedules').select('*').order('date', { ascending: true });
+                    if (!error && data && data.length > 0) {
+                        tasks = data;
+                    }
+                } catch (err) {
+                    console.log('無法連線至 schedules 資料表，使用預設任務。');
+                }
             }
 
-            listEl.innerHTML = tasks.map(t => `
-                <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <div>
-                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-ntueBlue mr-2">${t.category}</span>
-                        <span class="font-medium text-gray-800 text-sm">${t.title}</span>
-                        <span class="text-xs text-gray-500 block mt-1">預定日期：${t.date}</span>
+            if (countBadge) countBadge.innerText = `共 ${tasks.length} 項任務`;
+
+            if (listEl) {
+                listEl.innerHTML = tasks.map(t => `
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-sm transition gap-2">
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-blue-100 text-ntueBlue">${t.category}</span>
+                                <span class="font-medium text-gray-800 text-sm">${t.title}</span>
+                            </div>
+                            <span class="text-xs text-gray-500 block">預定完成日期：${t.date}</span>
+                        </div>
+                        <div class="flex items-center space-x-3 w-full md:w-auto justify-between md:justify-end">
+                            <span class="text-xs px-2.5 py-1 rounded bg-amber-100 text-amber-800 font-bold">${t.status || '進行中'}</span>
+                            ${isAdminLoggedIn ? `<button onclick="deleteTask(${t.id})" class="text-xs bg-red-100 text-red-700 px-2.5 py-1 rounded font-bold hover:bg-red-200 transition">刪除</button>` : ''}
+                        </div>
                     </div>
-                    <span class="text-xs px-2 py-1 rounded bg-amber-100 text-amber-800 font-bold">${t.status || '進行中'}</span>
-                </div>
-            `).join('');
+                `).join('');
+            }
         }
         loadTasks();
 
-        // 登入與權限控制
-        function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); }
-        function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); }
+        // ---------------------------------------------------------
+        // 5. 權限控管與 Auth 登入邏輯
+        // ---------------------------------------------------------
+        function openLoginModal() { 
+            document.getElementById('login-modal').classList.remove('hidden'); 
+        }
+        
+        function closeLoginModal() { 
+            document.getElementById('login-modal').classList.add('hidden'); 
+        }
+
+        async function checkAuthSession() {
+            if (!supabaseClient) return;
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                setAdminMode(true);
+            } else {
+                setAdminMode(false);
+            }
+        }
 
         async function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('admin-email').value;
             const password = document.getElementById('admin-password').value;
+
             if (supabaseClient) {
-                const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-                if (error) { alert('登入失敗：' + error.message); return; }
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) {
+                    alert('登入失敗：' + error.message + '
+(提示：請確認您已在 Supabase 建立此使用者帳號)');
+                    return;
+                }
+            } else {
+                // 本地展示模式直接授權
+                if (email !== 'admin@gaiabit.com') {
+                    alert('展示模式請使用 admin@gaiabit.com 登入');
+                    return;
+                }
             }
-            alert('管理者登入成功！已解鎖新增與修改權限。');
-            document.getElementById('admin-panel').classList.remove('hidden');
-            document.getElementById('role-badge').innerText = '目前權限：管理者（可新增排程）';
-            document.getElementById('role-badge').className = 'text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded font-bold';
-            document.getElementById('auth-btn').innerText = '已登入管理員';
+
+            setAdminMode(true);
+            alert('管理者登入成功！已解鎖新增與刪除權限。');
             closeLoginModal();
+            loadTasks();
         }
 
+        async function handleLogout() {
+            if (supabaseClient) {
+                await supabaseClient.auth.signOut();
+            }
+            setAdminMode(false);
+            alert('已成功登出管理員身分。');
+            loadTasks();
+        }
+
+        function setAdminMode(isAdmin) {
+            isAdminLoggedIn = isAdmin;
+            const adminPanel = document.getElementById('admin-panel');
+            const roleBadge = document.getElementById('user-role-badge');
+            const authBtn = document.getElementById('auth-btn');
+
+            if (isAdmin) {
+                if (adminPanel) adminPanel.classList.remove('hidden');
+                if (roleBadge) {
+                    roleBadge.innerText = '🛡️ 管理者模式（擁有編輯權限）';
+                    roleBadge.className = 'text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded font-bold border border-emerald-300';
+                }
+                if (authBtn) {
+                    authBtn.innerText = '登出管理員';
+                    authBtn.onclick = handleLogout;
+                    authBtn.className = 'bg-red-100 text-red-700 px-4 py-1.5 rounded-md font-bold text-xs hover:bg-red-200 transition';
+                }
+            } else {
+                if (adminPanel) adminPanel.classList.add('hidden');
+                if (roleBadge) {
+                    roleBadge.innerText = '訪客模式（唯讀）';
+                    roleBadge.className = 'text-xs bg-gray-800 text-gray-300 px-2.5 py-1 rounded font-medium';
+                }
+                if (authBtn) {
+                    authBtn.innerText = '管理者登入';
+                    authBtn.onclick = openLoginModal;
+                    authBtn.className = 'bg-ntueAccent text-ntueBlue px-4 py-1.5 rounded-md font-bold text-xs hover:bg-emerald-400 transition shadow-sm';
+                }
+            }
+        }
+
+        // ---------------------------------------------------------
+        // 6. 新增與刪除任務 (管理者專用)
+        // ---------------------------------------------------------
         async function handleAddTask(e) {
             e.preventDefault();
+            if (!isAdminLoggedIn) {
+                alert('權限不足：您必須以管理者身分登入才能新增任務！');
+                return;
+            }
+
             const title = document.getElementById('task-title').value;
             const date = document.getElementById('task-date').value;
             const category = document.getElementById('task-category').value;
+
             if (supabaseClient) {
-                await supabaseClient.from('schedules').insert([{ title, date, category, status: '進行中' }]);
+                const { error } = await supabaseClient.from('schedules').insert([{ title, date, category, status: '進行中' }]);
+                if (error) {
+                    alert('新增失敗：' + error.message);
+                    return;
+                }
+            } else {
+                alert('【本地展示模式】新任務已記錄！（若要持久化請連線 Supabase）');
             }
+
             alert('新任務已成功新增！');
             document.getElementById('task-form').reset();
+            loadTasks();
+        }
+
+        async function deleteTask(id) {
+            if (!isAdminLoggedIn) {
+                alert('權限不足：唯有管理者可刪除任務！');
+                return;
+            }
+            if (!confirm('確定要刪除此任務嗎？')) return;
+
+            if (supabaseClient) {
+                const { error } = await supabaseClient.from('schedules').delete().eq('id', id);
+                if (error) {
+                    alert('刪除失敗：' + error.message);
+                    return;
+                }
+            }
+            alert('任務已成功刪除！');
             loadTasks();
         }
     </script>
