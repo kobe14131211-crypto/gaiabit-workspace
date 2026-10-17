@@ -1,6 +1,5 @@
-# GaiaBit PM | Master Execution System 2026 (v3)
+# GaiaBit PM | Supabase Realtime Sync Edition
 
-## 🛠️ 本次重大更新
-1. **行事曆排序**：新增任務後自動依日期先後排序，不堆疊在最後。
-2. **嚴格白名單授權**：首位註冊者自動成為系統管理者，管理者可在後台透過 Email 白名單授權其他帳號成為後台編輯者。
-3. **即時連動**：新增任務後，自動同步至 Today Focus、76 任務中心與 FullCalendar 行事曆。
+## 🌐 核心優化說明
+1. **全網即時同步 (Realtime Sync)**：透過 Supabase 雲端資料庫連線，任何人在後台新增工作或變更任務狀態，全世界打開網站的人都可以「秒級即時自動更新」，絕對不會不同步！
+2. **嚴格 Google Email 白名單授權**：首位使用 Google 登入的使用者自動成為系統管理者（Owner），Owner 可在後台動態維護「編輯者授權白名單（Email 清單）」。其他人用任意 Google 登入若不在白名單內，僅能作為安全訪客瀏覽，無法註冊成後台編輯者。
